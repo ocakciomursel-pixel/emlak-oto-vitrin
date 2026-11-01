@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light" data-accent="blue">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yönetim Paneli — PortföyTR Emlak &amp; Vasıta İlan Sistemi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand-box" href="index.html">
+        <span class="brand-badge">PT</span>
+        <span class="brand-title" data-brand-name>PortföyTR</span>
+        <span class="brand-tag">İlan &amp; Mağaza Yönetim Paneli</span>
+      </a>
+
+      <div class="nav-actions">
+        <button type="button" class="btn btn-outline" id="toggleDarkBtn">Gece Modu</button>
+        <a class="btn btn-brand" href="index.html">← Canlı İlan Vitrinine Dön</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-grid">
+    <div style="display:flex;flex-direction:column;gap:18px;">
+      <section class="admin-card">
+        <h2 style="margin:0 0 4px;font-size:1.05rem;">Yeni Emlak / Vasıta İlanı Ekle</h2>
+        <p style="margin:0 0 14px;font-size:0.8rem;color:var(--ink-muted);">Buradan eklediğiniz ilan anında ana vitrinde yayına girer.</p>
+
+        <form id="adminAddForm">
+          <div class="form-row">
+            <label for="admSector">İlan Kategorisi</label>
+            <select id="admSector" class="inp">
+              <option value="emlak">Emlak / Gayrimenkul</option>
+              <option value="oto">Vasıta / Otomobil</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="admTitle">İlan Başlığı</label>
+            <input type="text" id="admTitle" class="inp" required placeholder="Örn: Deniz Manzaralı 3+1 Daire veya 2023 Audi A4">
+          </div>
+
+          <div class="price-pair form-row">
+            <div>
+              <label for="admCity">Şehir</label>
+              <select id="admCity" class="inp">
+                <option value="İstanbul">İstanbul</option>
+                <option value="Ankara">Ankara</option>
+                <option value="İzmir">İzmir</option>
+                <option value="Bursa">Bursa</option>
+                <option value="Antalya">Antalya</option>
+              </select>
+            </div>
+            <div>
+              <label for="admDistrict">İlçe / Semt</label>
+              <input type="text" id="admDistrict" class="inp" placeholder="Örn: Beşiktaş">
+            </div>
+          </div>
+
+          <div class="price-pair form-row">
+            <div>
+              <label for="admDeal">İşlem</label>
+              <select id="admDeal" class="inp">
+                <option value="Satılık">Satılık</option>
+                <option value="Kiralık">Kiralık</option>
+              </select>
+            </div>
+            <div>
+              <label for="admPrice">Fiyat (TL)</label>
+              <input type="number" id="admPrice" class="inp" required placeholder="3250000">
+            </div>
+          </div>
+
+          <div id="admEmlakFields">
+            <div class="price-pair form-row">
+              <div>
+                <label for="admRooms">Oda Sayısı</label>
+                <select id="admRooms" class="inp">
+                  <option value="2+1">2+1</option>
+                  <option value="3+1" selected>3+1</option>
+                  <option value="4+1">4+1</option>
+                </select>
+              </div>
+              <div>
+                <label for="admSqm">Net m²</label>
+                <input type="number" id="admSqm" class="inp" value="135">
+              </div>
+            </div>
+          </div>
+
+          <div id="admOtoFields" hidden>
+            <div class="price-pair form-row">
+              <div>
+                <label for="admYear">Model Yılı</label>
+                <input type="number" id="admYear" class="inp" value="2023">
+              </div>
+              <div>
+                <label for="admKm">Kilometre</label>
+                <input type="number" id="admKm" class="inp" value="24000">
+              </div>
+            </div>
+            <div class="price-pair form-row">
+              <div>
+                <label for="admFuel">Yakıt / Vites</label>
+                <input type="text" id="admFuel" class="inp" value="Benzin · Otomatik">
+              </div>
+              <div>
+                <label for="admDamage">Ekspertiz Özeti</label>
+                <input type="text" id="admDamage" class="inp" value="Hatasız · Boyasız">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="admDesc">İlan Açıklaması</label>
+            <textarea id="admDesc" class="inp" style="height:68px;padding:8px 12px;" placeholder="Ekspertiz, tapu, takas ve konum detayları..."></textarea>
+          </div>
+
+          <label style="display:flex;align-items:center;gap:7px;font-size:0.81rem;margin-bottom:12px;cursor:pointer;">
+            <input type="checkbox" id="admUrgent" checked>
+            <span>"Vitrin Fırsatı" rozetiyle üstte öne çıkar</span>
+          </label>
+
+          <button type="submit" class="btn btn-brand" style="width:100%;">İlanı Yayınla</button>
+          <div id="admSavedNotice" hidden style="margin-top:8px;font-size:0.8rem;color:var(--badge-ok);font-weight:600;">İlan başarıyla eklendi! Vitrinde canlı görebilirsiniz.</div>
+        </form>
+      </section>
+
+      <section class="admin-card">
+        <h2 style="margin:0 0 10px;font-size:1rem;">Firma Başlığı &amp; WhatsApp Ayarları</h2>
+        <form id="adminBrandForm">
+          <div class="form-row">
+            <label for="cfgSiteName">Firma / Site İsmi (Canlı Değişir)</label>
+            <input type="text" id="cfgSiteName" class="inp">
+          </div>
+          <div class="form-row">
+            <label for="cfgSiteSub">Alt Başlık</label>
+            <input type="text" id="cfgSiteSub" class="inp">
+          </div>
+          <div class="form-row">
+            <label for="cfgPhone">WhatsApp Sipariş/İletişim Numarası</label>
+            <input type="text" id="cfgPhone" class="inp">
+          </div>
+          <button type="submit" class="btn btn-outline" style="width:100%;">Firma Bilgilerini Güncelle</button>
+        </form>
+      </section>
+    </div>
+
+    <section class="admin-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <h2 style="margin:0;font-size:1.05rem;">Yayındaki Portföy Listesi</h2>
+        <span style="font-size:0.78rem;color:var(--ink-muted);">Emlak ve Vasıta tek panelde</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>İlan No</th>
+              <th>Kategori</th>
+              <th>Başlık &amp; Konum</th>
+              <th>Fiyat</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="adminListingsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

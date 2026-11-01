@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light" data-accent="blue">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PortföyTR — Gayrimenkul &amp; Vasıta İlan Merkezi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand-box" href="index.html">
+        <span class="brand-badge">PT</span>
+        <span class="brand-title" data-brand-name>PortföyTR</span>
+        <span class="brand-tag" data-brand-sub>Gayrimenkul &amp; Vasıta İlan Merkezi</span>
+      </a>
+
+      <div class="nav-actions">
+        <div class="palette-pills" aria-label="Kurumsal renk seçici">
+          <span style="font-size:0.74rem;color:var(--ink-muted);margin-right:3px;">Renk:</span>
+          <button type="button" class="swatch-dot" style="background:#1E40AF;" data-set-accent="blue" aria-pressed="true" title="Kurumsal Lacivert"></button>
+          <button type="button" class="swatch-dot" style="background:#0F766E;" data-set-accent="emerald" aria-pressed="false" title="Zümrüt Portföy"></button>
+          <button type="button" class="swatch-dot" style="background:#B45309;" data-set-accent="amber" aria-pressed="false" title="Kehribar Galeri"></button>
+        </div>
+        <button type="button" class="btn btn-outline" id="toggleDarkBtn">Gece Modu</button>
+        <a class="btn btn-brand" href="admin.html">Yönetim Paneli (İlan Ekle)</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="search-band">
+    <div class="container">
+      <div class="sector-tabs" role="tablist">
+        <button type="button" class="sector-tab is-active" data-sector-tab="all">Tüm Portföy (Emlak + Vasıta)</button>
+        <button type="button" class="sector-tab" data-sector-tab="emlak">Emlak &amp; Konut İlanları</button>
+        <button type="button" class="sector-tab" data-sector-tab="oto">Vasıta &amp; Oto Galeri</button>
+      </div>
+
+      <div class="quick-search-bar">
+        <input type="search" id="qSearch" class="inp" placeholder="İlan no (#PRT-1041), marka, model, semt veya anahtar kelime ara...">
+        <select id="citySelect" class="inp" aria-label="Şehir seç">
+          <option value="all">Tüm Şehirler</option>
+          <option value="İstanbul">İstanbul</option>
+          <option value="Ankara">Ankara</option>
+          <option value="İzmir">İzmir</option>
+          <option value="Bursa">Bursa</option>
+          <option value="Antalya">Antalya</option>
+        </select>
+        <select id="dealSelect" class="inp" aria-label="İşlem türü">
+          <option value="all">Satılık &amp; Kiralık</option>
+          <option value="Satılık">Sadece Satılık</option>
+          <option value="Kiralık">Sadece Kiralık</option>
+        </select>
+        <select id="sortSelect" class="inp" aria-label="Sıralama">
+          <option value="newest">Sırala: Vitrin &amp; En Yeni</option>
+          <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+          <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+        </select>
+        <button type="button" class="btn btn-outline" id="resetFiltersBtn">Sıfırla</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="container portal-layout">
+    <aside class="filter-panel" aria-label="Detaylı filtreleme">
+      <div class="filter-group">
+        <span class="filter-label">Fiyat Aralığı (TL)</span>
+        <div class="price-pair">
+          <input type="number" id="minPriceInp" class="inp" placeholder="En Az ₺">
+          <input type="number" id="maxPriceInp" class="inp" placeholder="En Çok ₺">
+        </div>
+      </div>
+
+      <div class="filter-group" id="emlakSpecificFilters">
+        <span class="filter-label">Emlak — Oda Sayısı</span>
+        <div class="chip-grid">
+          <button type="button" class="filter-chip" data-room-chip="2+1">2+1</button>
+          <button type="button" class="filter-chip" data-room-chip="3+1">3+1</button>
+          <button type="button" class="filter-chip" data-room-chip="4+1">4+1 / Villa</button>
+        </div>
+      </div>
+
+      <div class="filter-group" id="otoSpecificFilters">
+        <span class="filter-label">Vasıta — Yakıt &amp; Ekspertiz</span>
+        <div class="chip-grid" style="margin-bottom:10px;">
+          <button type="button" class="filter-chip" data-fuel-chip="Benzin">Benzin</button>
+          <button type="button" class="filter-chip" data-fuel-chip="Dizel">Dizel</button>
+        </div>
+        <input type="number" id="maxKmInp" class="inp" placeholder="Maksimum KM (örn: 45000)" style="margin-bottom:8px;">
+        <label style="display:flex;align-items:center;gap:7px;font-size:0.81rem;cursor:pointer;">
+          <input type="checkbox" id="undamagedChk">
+          <span>Sadece Hatasız / Boyasız Araçlar</span>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Hızlı İletişim &amp; Ekspertiz</span>
+        <p style="margin:0 0 10px;font-size:0.79rem;color:var(--ink-muted);">Tüm gayrimenkul ve araç ilanlarımız yerinde ekspertiz ve şeffaf portföy güvencesiyle sunulur.</p>
+        <a class="btn btn-outline" href="admin.html" style="width:100%;">Admin Panelini Canlı Test Et →</a>
+      </div>
+    </aside>
+
+    <section>
+      <div class="results-bar">
+        <div class="results-count" id="resultsCount">8 aktif ilan listeleniyor</div>
+        <div style="font-size:0.8rem;color:var(--ink-muted);">İlan kartlarından ekspertiz şemasını ve tapu detayını inceleyebilirsiniz</div>
+      </div>
+
+      <div class="listings-grid" id="listingsGrid"></div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="detailModal" hidden>
+    <div class="modal-card" id="detailModalContent" role="dialog" aria-modal="true"></div>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
