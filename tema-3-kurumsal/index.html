@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="tr" data-palette="portal">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tema 3: Pro Tablo &amp; Karşılaştırma Portalı — PortföyTR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: "JetBrains Mono", monospace;
+
+      --bg: #F4F5F8;
+      --panel: #FFFFFF;
+      --subtle: #EBEEF3;
+      --head-bg: #111827;
+      --head-fg: #FFFFFF;
+      --ink: #0F172A;
+      --body: #334155;
+      --muted: #64748B;
+      --border: #D5DBE5;
+      --border-soft: #E5E9F0;
+      --accent: #D97706;
+      --accent-fg: #FFFFFF;
+      --accent-badge: #FEF3C7;
+      --accent-badge-ink: #92400E;
+      --price-ink: #B91C1C;
+    }
+    [data-palette="indigo"] {
+      --head-bg: #1E1B4B;
+      --accent: #3B5BDB;
+      --accent-badge: #EEF2FF;
+      --accent-badge-ink: #3730A3;
+      --price-ink: #1D4ED8;
+    }
+    [data-palette="navy"] {
+      --head-bg: #0F172A;
+      --accent: #1E3A8A;
+      --accent-badge: #EFF6FF;
+      --accent-badge-ink: #1E40AF;
+      --price-ink: #1E3A8A;
+    }
+    [data-palette="terminal"] {
+      --bg: #0B0F17;
+      --panel: #131924;
+      --subtle: #1B2332;
+      --head-bg: #070A10;
+      --head-fg: #F8FAFC;
+      --ink: #F1F5F9;
+      --body: #CBD5E1;
+      --muted: #94A3B8;
+      --border: #263145;
+      --border-soft: #1E2738;
+      --accent: #F59E0B;
+      --accent-fg: #0F172A;
+      --accent-badge: #451A03;
+      --accent-badge-ink: #FDE68A;
+      --price-ink: #FBBF24;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 13.5px;
+      line-height: 1.45;
+      background: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; color: inherit; }
+    .num { font-variant-numeric: tabular-nums; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 0 18px; }
+
+    /* Classic High-Density Portal Header */
+    .p-topbar {
+      background: var(--head-bg);
+      color: var(--head-fg);
+      border-bottom: 3px solid var(--accent);
+    }
+    .p-topbar-inner {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+    .p-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .p-logo-box {
+      padding: 4px 10px;
+      background: var(--accent);
+      color: var(--accent-fg);
+      font-weight: 800;
+      border-radius: 3px;
+      letter-spacing: -0.02em;
+    }
+    .p-search-inline {
+      flex: 1;
+      max-width: 520px;
+      display: flex;
+    }
+    .p-search-inline input {
+      flex: 1;
+      height: 36px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 4px 0 0 4px;
+      background: #ffffff;
+      color: #0f172a;
+      outline: none;
+    }
+    .p-search-inline button {
+      height: 36px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 0 4px 4px 0;
+      background: var(--accent);
+      color: var(--accent-fg);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .p-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .p-dots { display: flex; gap: 5px; padding: 4px 8px; background: rgba(255,255,255,0.1); border-radius: 4px; }
+    .pd { width: 15px; height: 15px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.45); cursor: pointer; padding: 0; }
+    .pd.active { outline: 2px solid #fff; outline-offset: 1px; }
+
+    .p-btn {
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 12.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .p-btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-fg);
+    }
+
+    /* Portal 2-Column Layout */
+    .p-layout {
+      display: grid;
+      grid-template-columns: 256px minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px 0 90px;
+      align-items: start;
+    }
+    .p-sidebar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .p-side-sec {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .p-side-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .tree-btn {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--body);
+    }
+    .tree-btn:hover { background: var(--subtle); }
+    .tree-btn.active {
+      background: var(--accent-badge);
+      color: var(--accent-badge-ink);
+      font-weight: 700;
+    }
+
+    /* Toolbar */
+    .p-toolbar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* High-Density Pro Table View */
+    .p-table-wrap {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .p-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .p-table th {
+      background: var(--subtle);
+      padding: 9px 11px;
+      text-align: left;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .p-table td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--border-soft);
+      vertical-align: middle;
+    }
+    .p-table tr:hover td {
+      background: color-mix(in srgb, var(--accent) 5%, var(--panel));
+    }
+    .p-thumb {
+      width: 96px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      border: 1px solid var(--border-soft);
+    }
+    .p-price {
+      font-family: var(--mono);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--price-ink);
+      white-space: nowrap;
+    }
+
+    /* Vitrin Box Grid Mode */
+    .p-box-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .p-box-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .p-box-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+    .p-box-body { padding: 11px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+
+    /* Compare Bottom Dock */
+    .cmp-dock {
+      position: fixed;
+      left: 18px;
+      bottom: 16px;
+      z-index: 950;
+      background: var(--head-bg);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+    }
+    .cmp-dock[hidden] { display: none; }
+
+    /* Slide-Over Detail Drawer */
+    .drawer-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.55);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .drawer-mask[hidden] { display: none; }
+    .drawer-sheet {
+      width: min(560px, 100vw);
+      height: 100%;
+      background: var(--panel);
+      border-left: 1px solid var(--border);
+      padding: 22px;
+      overflow-y: auto;
+      animation: slideInRight 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    @media (max-width: 1020px) {
+      .p-layout { grid-template-columns: 1fr; }
+      .p-box-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 580px) {
+      .p-box-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="p-topbar">
+    <div class="container p-topbar-inner">
+      <a class="p-logo" href="../index.html">
+        <span class="p-logo-box" data-bname>PortföyTR</span>
+        <span style="font-size:12px;opacity:0.85;">Kurumsal İlan &amp; Ekspertiz Portalı</span>
+      </a>
+
+      <div class="p-search-inline">
+        <input type="search" id="pQuery" placeholder="İlan No (#PRT-1041), kelime, marka, il veya ilçe ile hızlı ara...">
+        <button type="button" id="pSearchBtn">Ara</button>
+      </div>
+
+      <div class="p-actions">
+        <div class="p-dots" aria-label="Portal renk şeması">
+          <button type="button" class="pd active" style="background:#D97706;" data-pal="portal" title="Klasik Portal Sarı-Siyah"></button>
+          <button type="button" class="pd" style="background:#3B5BDB;" data-pal="indigo" title="Kurumsal İndigo"></button>
+          <button type="button" class="pd" style="background:#1E3A8A;" data-pal="navy" title="Bankacılık Laciverti"></button>
+          <button type="button" class="pd" style="background:#0B0F17;" data-pal="terminal" title="Koyu Terminal"></button>
+        </div>
+        <a class="p-btn p-btn-accent" href="../admin.html">Ücretsiz İlan / Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container p-layout">
+    <aside class="p-sidebar">
+      <div class="p-side-sec">
+        <span class="p-side-title">Kategori Ağacı</span>
+        <button type="button" class="tree-btn active" data-tree="all"><span>Tüm Portföy</span><span class="num" id="cntAll">9</span></button>
+        <button type="button" class="tree-btn" data-tree="emlak"><span>Emlak &amp; Gayrimenkul</span><span class="num" id="cntEm">5</span></button>
+        <button type="button" class="tree-btn" data-tree="oto"><span>Vasıta &amp; Otomobil</span><span class="num" id="cntOto">4</span></button>
+        <button type="button" class="tree-btn" data-tree="urgent"><span>Acil / Vitrin Fırsatları</span><span class="num">★</span></button>
+        <button type="button" class="tree-btn" data-tree="swap"><span>Takasa Açık İlanlar</span><span class="num">⇄</span></button>
+      </div>
+
+      <div class="p-side-sec">
+        <span class="p-side-title">İl Filtresi</span>
+        <select id="pCity" style="width:100%;height:34px;padding:0 8px;border:1px solid var(--border);border-radius:4px;background:var(--panel);">
+          <option value="all">Tüm İller</option>
+          <option value="İstanbul">İstanbul</option>
+          <option value="Ankara">Ankara</option>
+          <option value="İzmir">İzmir</option>
+          <option value="Bursa">Bursa</option>
+          <option value="Antalya">Antalya</option>
+        </select>
+      </div>
+
+      <div class="p-side-sec">
+        <span class="p-side-title">Fiyat Aralığı (₺)</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+          <input type="number" id="pMin" placeholder="Min ₺" style="width:100%;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:4px;background:var(--panel);">
+          <input type="number" id="pMax" placeholder="Maks ₺" style="width:100%;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:4px;background:var(--panel);">
+        </div>
+      </div>
+
+      <div class="p-side-sec" style="border-bottom:0;">
+        <span class="p-side-title">Karşılaştırma Özelliği</span>
+        <p style="margin:0;font-size:12px;color:var(--muted);">Tablodaki ilanların yanındaki <strong>Kıyasla</strong> kutusunu işaretleyerek 2 veya 3 ilanı yan yana teknik tablo halinde karşılaştırabilirsiniz.</p>
+      </div>
+    </aside>
+
+    <section>
+      <div class="p-toolbar">
+        <div>
+          <strong id="pResultLabel">9 ilan listeleniyor</strong>
+          <span style="color:var(--muted);font-size:12px;margin-left:8px;">· Doğrulanmış Kurumsal Portföy</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <select id="pSort" style="height:34px;padding:0 10px;border:1px solid var(--border);border-radius:4px;background:var(--panel);">
+            <option value="default">Sıralama: Vitrin Öncelikli</option>
+            <option value="asc">Fiyata Göre (Önce En Düşük)</option>
+            <option value="desc">Fiyata Göre (Önce En Yüksek)</option>
+          </select>
+          <button type="button" class="p-btn p-btn-accent" id="btnViewTable">☰ Tablo Görünümü</button>
+          <button type="button" class="p-btn" id="btnViewBox">⊞ Kutu Vitrin</button>
+        </div>
+      </div>
+
+      <div id="pMount"></div>
+    </section>
+  </main>
+
+  <div class="cmp-dock" id="cmpDock" hidden>
+    <span id="cmpText">2 ilan seçildi</span>
+    <button type="button" class="p-btn p-btn-accent" id="btnOpenCmp">Yan Yana Karşılaştır</button>
+    <button type="button" class="p-btn" id="btnClearCmp">Temizle</button>
+  </div>
+
+  <div class="drawer-mask" id="drawerMask" hidden>
+    <div class="drawer-sheet" id="drawerSheet"></div>
+  </div>
+
+  <script src="../assets/portfolio-engine.js"></script>
+  <script>
+    (function () {
+      const E = window.PortfoyEngine;
+      const cfg = E.getConfig();
+      document.querySelectorAll('[data-bname]').forEach(el => { el.textContent = cfg.siteName; });
+      E.mountThemeSwitcher('t3', '../');
+
+      let tree = 'all';
+      let viewMode = 'table';
+      const cmpSet = new Set();
+
+      document.querySelectorAll('[data-pal]').forEach(b => {
+        b.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-palette', b.getAttribute('data-pal'));
+          document.querySelectorAll('[data-pal]').forEach(x => x.classList.toggle('active', x === b));
+        });
+      });
+
+      const allData = E.getListings();
+      document.getElementById('cntAll').textContent = allData.length;
+      document.getElementById('cntEm').textContent = allData.filter(x => x.sector === 'emlak').length;
+      document.getElementById('cntOto').textContent = allData.filter(x => x.sector === 'oto').length;
+
+      function getFiltered() {
+        const q = document.getElementById('pQuery').value.trim().toLowerCase();
+        const city = document.getElementById('pCity').value;
+        const min = Number(document.getElementById('pMin').value || 0);
+        const max = Number(document.getElementById('pMax').value || 0);
+        const sort = document.getElementById('pSort').value;
+
+        let arr = E.getListings().filter(it => {
+          if (tree === 'emlak' && it.sector !== 'emlak') return false;
+          if (tree === 'oto' && it.sector !== 'oto') return false;
+          if (tree === 'urgent' && !it.urgent) return false;
+          if (tree === 'swap' && !it.swapOk) return false;
+          if (city !== 'all' && it.city !== city) return false;
+          if (min > 0 && it.price < min) return false;
+          if (max > 0 && it.price > max) return false;
+          if (q && !(it.title + ' ' + it.id + ' ' + it.city + ' ' + it.district).toLowerCase().includes(q)) return false;
+          return true;
+        });
+
+        if (sort === 'asc') arr.sort((a, b) => a.price - b.price);
+        if (sort === 'desc') arr.sort((a, b) => b.price - a.price);
+        return arr;
+      }
+
+      function syncCmpDock() {
+        const dock = document.getElementById('cmpDock');
+        dock.hidden = cmpSet.size === 0;
+        document.getElementById('cmpText').textContent = cmpSet.size + ' ilan karşılaştırmaya eklendi';
+      }
+
+      function render() {
+        const list = getFiltered();
+        document.getElementById('pResultLabel').textContent = list.length + ' ilan listeleniyor';
+        const mount = document.getElementById('pMount');
+
+        if (viewMode === 'table') {
+          mount.innerHTML = `
+            <div class="p-table-wrap">
+              <table class="p-table">
+                <thead>
+                  <tr>
+                    <th>Fotoğraf</th>
+                    <th>İlan No</th>
+                    <th>İlan Başlığı &amp; Durum</th>
+                    <th>Oda / Model</th>
+                    <th>m² / KM</th>
+                    <th>İl / İlçe</th>
+                    <th>Fiyat</th>
+                    <th>Kıyasla</th>
+                    <th>İncele</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${list.map(it => {
+                    const isEm = it.sector === 'emlak';
+                    const fb = E.makeFallbackSvg(it.id, '#1e293b');
+                    return `
+                      <tr>
+                        <td><img class="p-thumb" src="${it.images[0]}" alt="${it.title}" loading="lazy" onerror="this.onerror=null;this.src='${fb}';"></td>
+                        <td style="font-family:var(--mono);font-size:12px;">${it.id}</td>
+                        <td>
+                          <div style="display:flex;gap:5px;margin-bottom:3px;flex-wrap:wrap;">
+                            <span style="padding:1px 6px;border-radius:3px;font-size:11px;font-weight:700;background:var(--subtle);">${isEm ? 'EMLAK · ' + it.dealType : 'VASITA'}</span>
+                            ${it.urgent ? '<span style="padding:1px 6px;border-radius:3px;font-size:11px;font-weight:700;background:#FEE2E2;color:#991B1B;">ACİL VİTRİN</span>' : ''}
+                            ${it.swapOk ? '<span style="padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;background:#DCFCE7;color:#166534;">TAKASLI</span>' : ''}
+                          </div>
+                          <strong style="cursor:pointer;" data-open-drawer="${it.id}">${it.title}</strong>
+                        </td>
+                        <td class="num">${isEm ? it.rooms : it.year}</td>
+                        <td class="num">${isEm ? it.sqmNet + ' m²' : Number(it.km).toLocaleString('tr-TR') + ' km'}</td>
+                        <td><strong>${it.city}</strong><div style="font-size:12px;color:var(--muted);">${it.district}</div></td>
+                        <td class="p-price num">${E.formatPrice(it.price, it.dealType)}</td>
+                        <td><label style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:12px;"><input type="checkbox" data-cmp="${it.id}" ${cmpSet.has(it.id) ? 'checked' : ''}> Seç</label></td>
+                        <td><button type="button" class="p-btn" data-open-drawer="${it.id}">Detay</button></td>
+                      </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>`;
+        } else {
+          mount.innerHTML = `
+            <div class="p-box-grid">
+              ${list.map(it => {
+                const isEm = it.sector === 'emlak';
+                const fb = E.makeFallbackSvg(it.id, '#1e293b');
+                return `
+                  <article class="p-box-card">
+                    <img src="${it.images[0]}" alt="${it.title}" loading="lazy" onerror="this.onerror=null;this.src='${fb}';">
+                    <div class="p-box-body">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                        <span class="p-price num">${E.formatPrice(it.price, it.dealType)}</span>
+                        <span style="font-family:var(--mono);font-size:11px;color:var(--muted);">#${it.id}</span>
+                      </div>
+                      <strong style="font-size:13px;line-height:1.35;">${it.title}</strong>
+                      <div style="font-size:12px;color:var(--muted);margin-top:auto;">${it.city} · ${isEm ? it.rooms + ' · ' + it.sqmNet + ' m²' : it.year + ' · ' + Number(it.km).toLocaleString('tr-TR') + ' km'}</div>
+                      <button type="button" class="p-btn p-btn-accent" style="width:100%;justify-content:center;margin-top:6px;" data-open-drawer="${it.id}">Hızlı İncele</button>
+                    </div>
+                  </article>`;
+              }).join('')}
+            </div>`;
+        }
+
+        mount.querySelectorAll('[data-open-drawer]').forEach(el => {
+          el.addEventListener('click', () => openDrawer(el.getAttribute('data-open-drawer')));
+        });
+        mount.querySelectorAll('[data-cmp]').forEach(chk => {
+          chk.addEventListener('change', () => {
+            const id = chk.getAttribute('data-cmp');
+            if (chk.checked) {
+              if (cmpSet.size >= 3) { chk.checked = false; return; }
+              cmpSet.add(id);
+            } else {
+              cmpSet.delete(id);
+            }
+            syncCmpDock();
+          });
+        });
+      }
+
+      function openDrawer(id) {
+        const it = E.getListings().find(x => x.id === id);
+        if (!it) return;
+        const mask = document.getElementById('drawerMask');
+        const sheet = document.getElementById('drawerSheet');
+        const isEm = it.sector === 'emlak';
+
+        sheet.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-family:var(--mono);font-size:12px;color:var(--muted);">İLAN KÜNYESİ #${it.id}</span>
+            <button type="button" class="p-btn" id="closeDrawerBtn">Kapat ✕</button>
+          </div>
+          <img src="${it.images[0]}" alt="${it.title}" style="width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:5px;border:1px solid var(--border);">
+          <h2 style="margin:12px 0 6px;font-size:1.2rem;">${it.title}</h2>
+          <div class="p-price num" style="font-size:1.5rem;margin-bottom:12px;">${E.formatPrice(it.price, it.dealType)}</div>
+          <p style="color:var(--body);line-height:1.55;">${it.desc}</p>
+          <div style="margin:16px 0;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:5px;">
+            ${isEm ? `
+              <strong style="display:block;margin-bottom:8px;">Gayrimenkul Teknik Özeti</strong>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;">
+                <div>Konum: <strong>${it.city} / ${it.district}</strong></div>
+                <div>Oda / Alan: <strong>${it.rooms} · ${it.sqmNet} m²</strong></div>
+                <div>Isıtma: <strong>${it.heating}</strong></div>
+                <div>Tapu: <strong>${it.deed}</strong></div>
+              </div>
+            ` : `
+              <strong style="display:block;margin-bottom:8px;">Ekspertiz &amp; Kaporta Raporu (${it.tramer || '0 ₺'})</strong>
+              ${E.renderEkspertizSvg(it.ekspertiz, false)}
+            `}
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <a class="p-btn p-btn-accent" style="justify-content:center;height:40px;" target="_blank" rel="noopener" href="https://wa.me/${cfg.phone}?text=${encodeURIComponent(it.id + ' nolu ilan için yazıyorum.')}">WhatsApp ile Teklif Ver</a>
+            <a class="p-btn" style="justify-content:center;height:40px;" href="tel:+${cfg.phone}">${cfg.phoneDisplay}</a>
+          </div>`;
+        mask.hidden = false;
+        document.getElementById('closeDrawerBtn').onclick = () => { mask.hidden = true; };
+      }
+
+      document.getElementById('btnOpenCmp').addEventListener('click', () => {
+        const items = E.getListings().filter(x => cmpSet.has(x.id));
+        if (!items.length) return;
+        const mask = document.getElementById('drawerMask');
+        const sheet = document.getElementById('drawerSheet');
+        sheet.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <strong>Yan Yana İlan Karşılaştırma (${items.length} İlan)</strong>
+            <button type="button" class="p-btn" id="closeDrawerBtn">Kapat ✕</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(${items.length},minmax(0,1fr));gap:10px;">
+            ${items.map(it => `
+              <div style="padding:10px;border:1px solid var(--border);border-radius:5px;background:var(--bg);">
+                <img src="${it.images[0]}" alt="${it.title}" style="width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:4px;">
+                <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px;">#${it.id}</div>
+                <strong style="display:block;font-size:12.5px;margin:4px 0;">${it.title}</strong>
+                <div class="p-price num" style="margin-bottom:8px;">${E.formatPrice(it.price, it.dealType)}</div>
+                <div style="font-size:12px;border-top:1px solid var(--border);padding-top:6px;">
+                  <div>İl: <strong>${it.city}</strong></div>
+                  <div>Detay: <strong>${it.sector === 'emlak' ? it.rooms + ' · ' + it.sqmNet + ' m²' : it.year + ' · ' + Number(it.km).toLocaleString('tr-TR') + ' km'}</strong></div>
+                  <div>Takas: <strong>${it.swapOk ? 'Uygun' : 'Yok'}</strong></div>
+                </div>
+              </div>`).join('')}
+          </div>`;
+        mask.hidden = false;
+        document.getElementById('closeDrawerBtn').onclick = () => { mask.hidden = true; };
+      });
+
+      document.getElementById('btnClearCmp').addEventListener('click', () => {
+        cmpSet.clear();
+        syncCmpDock();
+        render();
+      });
+
+      document.getElementById('drawerMask').addEventListener('click', e => {
+        if (e.target.id === 'drawerMask') e.target.hidden = true;
+      });
+
+      document.querySelectorAll('[data-tree]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tree = btn.getAttribute('data-tree');
+          document.querySelectorAll('[data-tree]').forEach(b => b.classList.toggle('active', b === btn));
+          render();
+        });
+      });
+
+      ['pQuery', 'pCity', 'pMin', 'pMax', 'pSort'].forEach(id => {
+        document.getElementById(id).addEventListener('input', render);
+        document.getElementById(id).addEventListener('change', render);
+      });
+      document.getElementById('pSearchBtn').addEventListener('click', render);
+
+      document.getElementById('btnViewTable').addEventListener('click', () => {
+        viewMode = 'table';
+        document.getElementById('btnViewTable').classList.add('p-btn-accent');
+        document.getElementById('btnViewBox').classList.remove('p-btn-accent');
+        render();
+      });
+      document.getElementById('btnViewBox').addEventListener('click', () => {
+        viewMode = 'box';
+        document.getElementById('btnViewBox').classList.add('p-btn-accent');
+        document.getElementById('btnViewTable').classList.remove('p-btn-accent');
+        render();
+      });
+
+      render();
+    })();
+  </script>
+  <script src="../assets/motion-polish.js"></script>
+</body>
+</html>

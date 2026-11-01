@@ -1,122 +1,1073 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="light" data-accent="blue">
+<html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PortföyTR — Gayrimenkul &amp; Vasıta İlan Merkezi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PortföyTR — 4 Farklı Profesyonel Tasarım Teması &amp; 16 Renk Seçeneği</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=JetBrains+Mono:wght@500;600;700&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #090B10;
+      --surface: #121620;
+      --surface-2: #191F2D;
+      --glass: rgba(18, 22, 32, 0.78);
+      --line: rgba(255, 255, 255, 0.10);
+      --line-strong: rgba(255, 255, 255, 0.22);
+      --ink: #F8FAFC;
+      --muted: #94A3B8;
+      --gold: #EAB308;
+      --blue: #2997FF;
+      --coral: #FF385C;
+      --crimson: #DA291C;
+      --emerald: #10B981;
+      --display: 'Outfit', system-ui, -apple-system, sans-serif;
+      --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    ::selection { background: var(--blue); color: #fff; }
+    ::-webkit-scrollbar { width: 9px; height: 9px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 99px; }
+
+    body {
+      font-family: var(--sans);
+      background:
+        radial-gradient(960px 480px at 12% -6%, rgba(41, 151, 255, 0.16), transparent 62%),
+        radial-gradient(860px 460px at 88% 2%, rgba(218, 41, 28, 0.13), transparent 60%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 92px;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+    /* Üst Canlı Bilgilendirme Bandı */
+    .notice-bar {
+      background: linear-gradient(90deg, #111827, #1E293B, #111827);
+      border-bottom: 1px solid var(--line);
+      padding: 10px 20px;
+      font-size: 13px;
+      color: #E2E8F0;
+    }
+    .notice-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 3px 11px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #6EE7B7;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .live-badge i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10B981;
+      display: inline-block;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.22);
+    }
+
+    /* Yüzen Cam Navigasyon */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 95;
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(165%);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #2997FF, #1D4ED8);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .brand strong {
+      display: block;
+      font-family: var(--display);
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .brand span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav-chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-chip:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: var(--line-strong);
+      transform: translateY(-1px);
+    }
+    .nav-chip.admin {
+      background: #FFFFFF;
+      color: #090B10;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Görseli Doyurucu Sinematik Hero Sahnesi */
+    .hero {
+      padding: 44px 0 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(32px, 4.1vw, 54px);
+      line-height: 1.07;
+      letter-spacing: -0.035em;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1.12em;
+      color: #60A5FA;
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 610px;
+      margin-bottom: 24px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
+    }
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease;
+    }
+    .btn-hero.primary {
+      background: #FFFFFF;
+      color: #090B10;
+    }
+    .btn-hero.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(255,255,255,0.22);
+    }
+    .btn-hero.secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--line-strong);
+      color: #fff;
+    }
+    .btn-hero.secondary:hover {
+      background: rgba(255,255,255,0.14);
+      transform: translateY(-2px);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .m-pill {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .m-pill small {
+      display: block;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+    .m-pill strong {
+      font-size: 16.5px;
+      font-weight: 700;
+    }
+
+    /* Sağ Canlı Çift Katmanlı Fotoğraf & Etkileşim Kolajı */
+    .hero-visual-deck {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      min-height: 390px;
+    }
+    .deck-main-photo {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 28px 60px rgba(0,0,0,0.55);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      transition: background-image 0.6s ease;
+    }
+    .deck-main-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9,11,16,0.10) 20%, rgba(9,11,16,0.88) 100%);
+    }
+    .deck-main-info {
+      position: relative;
+      z-index: 2;
+    }
+    .deck-side-stack {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 14px;
+    }
+    .deck-side-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+      padding: 14px;
+    }
+    .deck-side-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 25%, rgba(9,11,16,0.88) 100%);
+    }
+    .deck-side-card div { position: relative; z-index: 2; }
+
+    /* 2x2 Büyük Görsel 4-Tema Vitrini */
+    .themes-header {
+      padding: 26px 0 22px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .themes-header h2 {
+      font-family: var(--display);
+      font-size: clamp(24px, 2.8vw, 34px);
+      letter-spacing: -0.025em;
+    }
+    .themes-header p {
+      color: var(--muted);
+      font-size: 14.5px;
+      max-width: 560px;
+    }
+
+    .themes-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .t-showcase-card {
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      border-radius: 26px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.38);
+      transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+    }
+    .t-showcase-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Her Temanın Gerçek Fotoğraflı Zengin Sahne Önizlemesi */
+    .t-stage {
+      height: 265px;
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+    .t-stage-t1 {
+      background: linear-gradient(135deg, #FFF5F7 0%, #EFF6FF 100%);
+      color: #0F172A;
+    }
+    .t-stage-t2 {
+      background:
+        linear-gradient(90deg, rgba(9,11,16,0.92) 34%, rgba(9,11,16,0.30) 100%),
+        url('https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=80') center/cover;
+    }
+    .t-stage-t3 {
+      background: linear-gradient(180deg, #0F172A 0%, #1E293B 38%, #F1F5F9 38.3%, #F1F5F9 100%);
+      color: #0F172A;
+    }
+    .t-stage-t4 {
+      background:
+        radial-gradient(420px circle at 82% 22%, rgba(41,151,255,0.34), transparent 60%),
+        radial-gradient(380px circle at 18% 85%, rgba(124,58,237,0.28), transparent 60%),
+        #0B0D14;
+    }
+
+    .t-stage-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+    .t-pill-tag {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    /* Tema 1 Görsel Önizleme: Fotoğraflı Kartlar + Canlı Fiyat Pinli Harita */
+    .mock-t1 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 12px;
+      height: 176px;
+    }
+    .mock-t1-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .mock-t1-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 8px;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mock-t1-img {
+      height: 92px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.45s ease;
+    }
+    .t-showcase-card:hover .mock-t1-img { transform: scale(1.04); }
+    .mock-t1-map {
+      border-radius: 14px;
+      background: #DBEAFE;
+      background-image:
+        radial-gradient(circle at 30% 40%, rgba(59,130,246,0.18), transparent 50%),
+        linear-gradient(rgba(148,163,184,0.28) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.28) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px, 24px 24px;
+      position: relative;
+      border: 1px solid rgba(15,23,42,0.08);
+    }
+    .map-bubble {
+      position: absolute;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #fff;
+      color: #0F172A;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+    .map-bubble.hot {
+      background: #FF385C;
+      color: #fff;
+      animation: floatPin 2.8s ease-in-out infinite;
+    }
+    @keyframes floatPin {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* Tema 3 Görsel Önizleme: Fotoğraflı Fırsat Şeridi + Tablo */
+    .mock-t3 {
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 10px 26px rgba(15,23,42,0.12);
+      display: grid;
+      gap: 8px;
+    }
+    .mock-t3-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .mock-t3-tile {
+      height: 68px;
+      border-radius: 7px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .mock-t3-tile span {
+      position: absolute;
+      bottom: 4px;
+      left: 5px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(15,23,42,0.85);
+      color: #FACC15;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 700;
+    }
+    .mock-t3-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+    }
+
+    /* Tema 4 Görsel Önizleme: Asimetrik Liquid Glass Bento */
+    .mock-t4 {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 10px;
+      height: 176px;
+    }
+    .mock-t4-hero {
+      border-radius: 16px;
+      background:
+        linear-gradient(180deg, transparent 25%, rgba(9,9,11,0.88) 100%),
+        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=75') center/cover;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .mock-t4-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 10px;
+    }
+    .mock-t4-box {
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.14);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .t-info {
+      padding: 24px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .t-info h3 {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .t-info p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    .t-points {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 13.2px;
+      color: #E2E8F0;
+    }
+    .t-points li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .t-points svg {
+      flex-shrink: 0;
+      color: var(--emerald);
+    }
+
+    .t-palettes {
+      margin-top: auto;
+      padding-top: 15px;
+      border-top: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+    .t-palettes-label {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 9px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .palette-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.18s ease;
+    }
+    .pal-link:hover {
+      border-color: #fff;
+      transform: translateY(-1px);
+    }
+    .pal-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .t-launch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px 18px;
+      border-radius: 14px;
+      background: #FFFFFF;
+      color: #090B10;
+      font-weight: 800;
+      font-size: 14px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .t-launch:hover {
+      background: #E2E8F0;
+    }
+
+    /* Alt Admin + Birebir Özelleştirme Garantisi */
+    .bottom-duo {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+    }
+    .duo-panel {
+      border-radius: 26px;
+      padding: 30px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .duo-panel h3 {
+      font-family: var(--display);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .duo-panel p {
+      color: var(--muted);
+      font-size: 14.5px;
+      margin-bottom: 20px;
+    }
+    .mod-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .mod-item {
+      padding: 13px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+    }
+    .mod-item strong {
+      display: block;
+      font-size: 13.5px;
+      margin-bottom: 3px;
+    }
+    .mod-item span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .custom-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .custom-chips span {
+      padding: 7px 12px;
+      border-radius: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .hero, .themes-grid-4, .bottom-duo { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      .container { padding: 0 16px; }
+      .hero-metrics, .mod-grid, .hero-visual-deck { grid-template-columns: 1fr; }
+      .mock-t1, .mock-t4 { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand-box" href="index.html">
-        <span class="brand-badge">PT</span>
-        <span class="brand-title" data-brand-name>PortföyTR</span>
-        <span class="brand-tag" data-brand-sub>Gayrimenkul &amp; Vasıta İlan Merkezi</span>
-      </a>
 
-      <div class="nav-actions">
-        <div class="palette-pills" aria-label="Kurumsal renk seçici">
-          <span style="font-size:0.74rem;color:var(--ink-muted);margin-right:3px;">Renk:</span>
-          <button type="button" class="swatch-dot" style="background:#1E40AF;" data-set-accent="blue" aria-pressed="true" title="Kurumsal Lacivert"></button>
-          <button type="button" class="swatch-dot" style="background:#0F766E;" data-set-accent="emerald" aria-pressed="false" title="Zümrüt Portföy"></button>
-          <button type="button" class="swatch-dot" style="background:#B45309;" data-set-accent="amber" aria-pressed="false" title="Kehribar Galeri"></button>
-        </div>
-        <button type="button" class="btn btn-outline" id="toggleDarkBtn">Gece Modu</button>
-        <a class="btn btn-brand" href="admin.html">Yönetim Paneli (İlan Ekle)</a>
+  <div class="notice-bar">
+    <div class="notice-inner">
+      <div>
+        <span class="live-badge"><i></i> 4 FARKLI KONSEPT &amp; 16 RENK</span>
+        <span style="margin-left:8px;">Fikir vermesi için birbirinden tamamen farklı <strong>4 ayrı özel tasarım teması</strong> ve ortak yönetim paneli canlı hazırlandı.</span>
       </div>
+      <span style="color:#94A3B8;">Beğendiğiniz başka bir örnek site veya özel özellik varsa birebir uyarlanır.</span>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="./index.html" class="brand">
+        <div class="brand-mark">PTR</div>
+        <div>
+          <strong id="hubBrandName">PortföyTR</strong>
+          <span id="hubBrandSlogan">Gayrimenkul &amp; Otomotiv Çoklu Vitrin Stüdyosu</span>
+        </div>
+      </a>
+      <nav class="nav-links" aria-label="4 Tema Hızlı Geçiş">
+        <a class="nav-chip" href="./tema-1-vitrin/index.html">1 · Haritalı Pazar</a>
+        <a class="nav-chip" href="./tema-2-prestij/index.html">2 · Lüks Galeri</a>
+        <a class="nav-chip" href="./tema-3-kurumsal/index.html">3 · Pro Portal</a>
+        <a class="nav-chip" href="./tema-4-bento/index.html">4 · Bento Glass</a>
+        <a class="nav-chip admin" href="./admin.html">Yönetim Paneli →</a>
+      </nav>
     </div>
   </header>
 
-  <section class="search-band">
-    <div class="container">
-      <div class="sector-tabs" role="tablist">
-        <button type="button" class="sector-tab is-active" data-sector-tab="all">Tüm Portföy (Emlak + Vasıta)</button>
-        <button type="button" class="sector-tab" data-sector-tab="emlak">Emlak &amp; Konut İlanları</button>
-        <button type="button" class="sector-tab" data-sector-tab="oto">Vasıta &amp; Oto Galeri</button>
-      </div>
-
-      <div class="quick-search-bar">
-        <input type="search" id="qSearch" class="inp" placeholder="İlan no (#PRT-1041), marka, model, semt veya anahtar kelime ara...">
-        <select id="citySelect" class="inp" aria-label="Şehir seç">
-          <option value="all">Tüm Şehirler</option>
-          <option value="İstanbul">İstanbul</option>
-          <option value="Ankara">Ankara</option>
-          <option value="İzmir">İzmir</option>
-          <option value="Bursa">Bursa</option>
-          <option value="Antalya">Antalya</option>
-        </select>
-        <select id="dealSelect" class="inp" aria-label="İşlem türü">
-          <option value="all">Satılık &amp; Kiralık</option>
-          <option value="Satılık">Sadece Satılık</option>
-          <option value="Kiralık">Sadece Kiralık</option>
-        </select>
-        <select id="sortSelect" class="inp" aria-label="Sıralama">
-          <option value="newest">Sırala: Vitrin &amp; En Yeni</option>
-          <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
-          <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
-        </select>
-        <button type="button" class="btn btn-outline" id="resetFiltersBtn">Sıfırla</button>
-      </div>
-    </div>
-  </section>
-
-  <main class="container portal-layout">
-    <aside class="filter-panel" aria-label="Detaylı filtreleme">
-      <div class="filter-group">
-        <span class="filter-label">Fiyat Aralığı (TL)</span>
-        <div class="price-pair">
-          <input type="number" id="minPriceInp" class="inp" placeholder="En Az ₺">
-          <input type="number" id="maxPriceInp" class="inp" placeholder="En Çok ₺">
+  <main class="container">
+    <!-- Görseli Doyurucu Sinematik Hero -->
+    <section class="hero">
+      <div>
+        <h1>Klasik Kalıpların Dışında <em>Dört Farklı</em> Vitrin Kimliği</h1>
+        <p class="hero-desc">
+          Emlak ve otomobil portföyünüzü sıradan hazır şablonlarla değil; haritalı keşif deneyiminden sinematik lüks showroom'a, hızlı karşılaştırma portalından dinamik Liquid Glass Bento mimarisine kadar <strong>4 ayrı görsel dünyada</strong> canlı test edin.
+        </p>
+        <div class="hero-actions">
+          <a href="#dort-tema" class="btn-hero primary">4 Temayı &amp; 16 Rengi Canlı İncele ↓</a>
+          <a href="./tema-4-bento/index.html" class="btn-hero secondary">Yeni Bento Glass Stüdyoyu Aç ↗</a>
+        </div>
+        <div class="hero-metrics">
+          <div class="m-pill">
+            <small>Tasarım Kimliği</small>
+            <strong class="num">4 Ayrı Tema</strong>
+          </div>
+          <div class="m-pill">
+            <small>Canlı Atmosfer</small>
+            <strong class="num">16 Renk Modu</strong>
+          </div>
+          <div class="m-pill">
+            <small>Aktif Portföy</small>
+            <strong class="num" id="mTotalCount">9 İlan</strong>
+          </div>
+          <div class="m-pill">
+            <small>Portföy Hacmi</small>
+            <strong class="num" id="mTotalVolume">56,5 Mn ₺</strong>
+          </div>
         </div>
       </div>
 
-      <div class="filter-group" id="emlakSpecificFilters">
-        <span class="filter-label">Emlak — Oda Sayısı</span>
-        <div class="chip-grid">
-          <button type="button" class="filter-chip" data-room-chip="2+1">2+1</button>
-          <button type="button" class="filter-chip" data-room-chip="3+1">3+1</button>
-          <button type="button" class="filter-chip" data-room-chip="4+1">4+1 / Villa</button>
+      <!-- Sağ Canlı Değişen Fotoğraf Sahnesi -->
+      <div class="hero-visual-deck" aria-label="Canlı Görsel Portföy Önizlemesi">
+        <a href="./tema-4-bento/index.html" class="deck-main-photo" id="deckMainPhoto" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80')">
+          <div class="deck-main-info">
+            <span class="live-badge" style="margin-bottom:8px;">CANLI VİTRİN SEÇKİSİ</span>
+            <strong style="display:block;font-family:var(--display);font-size:20px;line-height:1.2;" id="deckMainTitle">Çankaya İncek Müstakil Isıtmalı Havuzlu 5+1 Modern Villa</strong>
+            <span class="num" style="display:inline-block;margin-top:6px;font-size:16px;color:#60A5FA;font-weight:700;" id="deckMainPrice">21.900.000 ₺</span>
+          </div>
+        </a>
+        <div class="deck-side-stack">
+          <a href="./tema-2-prestij/index.html" class="deck-side-card" style="background-image:url('https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=700&q=80')">
+            <div>
+              <span style="font-size:11px;font-weight:700;color:#FCA5A5;">0 TRAMER · EKSPERTİZLİ</span>
+              <strong style="display:block;font-size:14px;">2023 BMW 320i M Sport</strong>
+            </div>
+          </a>
+          <a href="./tema-1-vitrin/index.html" class="deck-side-card" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80')">
+            <div>
+              <span style="font-size:11px;font-weight:700;color:#6EE7B7;">HARİTALI KEŞİF · TAKASLI</span>
+              <strong style="display:block;font-size:14px;">Kadıköy Suadiye Sıfır 3+1</strong>
+            </div>
+          </a>
         </div>
       </div>
+    </section>
 
-      <div class="filter-group" id="otoSpecificFilters">
-        <span class="filter-label">Vasıta — Yakıt &amp; Ekspertiz</span>
-        <div class="chip-grid" style="margin-bottom:10px;">
-          <button type="button" class="filter-chip" data-fuel-chip="Benzin">Benzin</button>
-          <button type="button" class="filter-chip" data-fuel-chip="Dizel">Dizel</button>
+    <!-- 4 Farklı Tema Vitrini -->
+    <section id="dort-tema">
+      <div class="themes-header">
+        <h2>4 Farklı Tasarım Teması &amp; Tıklanabilir Renk Seçenekleri</h2>
+        <p>Her kartın altındaki renk butonlarına tıklayarak ilgili temayı doğrudan seçtiğiniz renk atmosferiyle canlı açabilirsiniz.</p>
+      </div>
+
+      <div class="themes-grid-4">
+        <!-- TEMA 4 (YENİ BENTO GLASS EN BAŞTA VEYA SIRALI — NET SIRALAMA 1-2-3-4 YAPALIM, 4. TEMAYA YENİ ETİKETİ KOYALIM) -->
+        <!-- TEMA 1 -->
+        <article class="t-showcase-card">
+          <div class="t-stage t-stage-t1">
+            <div class="t-stage-head">
+              <span class="t-pill-tag" style="background:#FFE4E9;color:#BE123C;">TEMA 1 · HARİTALI PAZAR YERİ</span>
+              <span style="font-size:11.5px;font-weight:700;color:#334155;">Bölünmüş Harita &amp; Keşif</span>
+            </div>
+            <div class="mock-t1" aria-hidden="true">
+              <div class="mock-t1-cards">
+                <div class="mock-t1-card">
+                  <div class="mock-t1-img" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=500&q=75')"></div>
+                  <div style="font-size:11px;font-weight:700;margin-top:5px;">Suadiye Teraslı 3+1</div>
+                  <div class="num" style="font-size:11px;font-weight:800;color:#FF385C;">14.750.000 ₺</div>
+                </div>
+                <div class="mock-t1-card">
+                  <div class="mock-t1-img" style="background-image:url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=500&q=75')"></div>
+                  <div style="font-size:11px;font-weight:700;margin-top:5px;">Mercedes C200 AMG</div>
+                  <div class="num" style="font-size:11px;font-weight:800;color:#0F172A;">3.090.000 ₺</div>
+                </div>
+              </div>
+              <div class="mock-t1-map">
+                <span class="map-bubble hot" style="top:22%;left:16%;">14,75 Mn ₺</span>
+                <span class="map-bubble" style="top:54%;left:36%;">3,15 Mn ₺</span>
+                <span class="map-bubble" style="bottom:14%;right:12%;">21,90 Mn ₺</span>
+              </div>
+            </div>
+          </div>
+          <div class="t-info">
+            <h3>Haritalı Pazar Yeri &amp; Modern Keşif</h3>
+            <p>Sol tarafta ferah yüksek çözünürlüklü ilan kartları, sağ tarafta ise kartlarla canlı etkileşime giren fiyat pinli interaktif harita deneyimi.</p>
+            <ul class="t-points">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Canlı fiyat balonlu interaktif harita &amp; hızlı önizleme kartı</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Yüzen hap arama barı, favorilere ekleme ve kredi hesaplı modal</li>
+            </ul>
+            <div class="t-palettes">
+              <div class="t-palettes-label"><span>4 Canlı Renk Seçeneği (Tıklayıp Açın)</span></div>
+              <div class="palette-row">
+                <a class="pal-link" href="./tema-1-vitrin/index.html?palette=rausch"><span class="pal-dot" style="background:#FF385C"></span>Mercan</a>
+                <a class="pal-link" href="./tema-1-vitrin/index.html?palette=ocean"><span class="pal-dot" style="background:#0066CC"></span>Okyanus</a>
+                <a class="pal-link" href="./tema-1-vitrin/index.html?palette=emerald"><span class="pal-dot" style="background:#0F766E"></span>Zümrüt</a>
+                <a class="pal-link" href="./tema-1-vitrin/index.html?palette=midnight"><span class="pal-dot" style="background:#111317;border:1px solid #fff"></span>Gece Modu</a>
+              </div>
+            </div>
+            <a href="./tema-1-vitrin/index.html" class="t-launch">Tema 1'i Canlı Deneyimle →</a>
+          </div>
+        </article>
+
+        <!-- TEMA 2 -->
+        <article class="t-showcase-card">
+          <div class="t-stage t-stage-t2">
+            <div class="t-stage-head">
+              <span class="t-pill-tag" style="background:rgba(218,41,28,0.85);color:#fff;">TEMA 2 · LÜKS OTO &amp; REZİDANS SHOWROOM</span>
+              <span class="num" style="font-size:11.5px;color:#E2E8F0;">3D Kart &amp; Ekspertiz Lab</span>
+            </div>
+            <div style="z-index:2;margin-top:auto;">
+              <div style="font-family:var(--display);font-size:23px;font-weight:800;letter-spacing:-0.02em;">2023 BMW 320i First Edition M Sport</div>
+              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+                <span class="num" style="padding:5px 10px;background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);font-size:11.5px;font-weight:700;">24.500 KM</span>
+                <span class="num" style="padding:5px 10px;background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);font-size:11.5px;font-weight:700;">0 ₺ TRAMER</span>
+                <span class="num" style="padding:5px 10px;background:#DA291C;font-size:11.5px;font-weight:700;">3.150.000 ₺</span>
+              </div>
+            </div>
+          </div>
+          <div class="t-info">
+            <h3>Sinematik Lüks Showroom &amp; Mimari Galeri</h3>
+            <p>Prestijli otomobil galerileri ve lüks villa ofisleri için tam ekran amiral gemisi vitrin sahnesi, 3D perspektif eğimli kartlar ve ekspertiz stüdyosu.</p>
+            <ul class="t-points">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Canlı <strong>Dijital Araç Kaporta Ekspertiz Şeması</strong> laboratuvarı</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 3D perspektif kart etkileşimi ve Konut/Taşıt Kredisi Simülatörü</li>
+            </ul>
+            <div class="t-palettes">
+              <div class="t-palettes-label"><span>4 Canlı Renk Seçeneği (Koyu + Mermer Açık)</span></div>
+              <div class="palette-row">
+                <a class="pal-link" href="./tema-2-prestij/index.html?palette=rosso"><span class="pal-dot" style="background:#DA291C"></span>Rosso Kırmızı</a>
+                <a class="pal-link" href="./tema-2-prestij/index.html?palette=bavaria"><span class="pal-dot" style="background:#1C69D4"></span>Bavaria M</a>
+                <a class="pal-link" href="./tema-2-prestij/index.html?palette=champagne"><span class="pal-dot" style="background:#C89D54"></span>Şampanya Altın</a>
+                <a class="pal-link" href="./tema-2-prestij/index.html?palette=ivory"><span class="pal-dot" style="background:#F6F5F1"></span>Mermer Fildişi</a>
+              </div>
+            </div>
+            <a href="./tema-2-prestij/index.html" class="t-launch">Tema 2'yi Canlı Deneyimle →</a>
+          </div>
+        </article>
+
+        <!-- TEMA 3 -->
+        <article class="t-showcase-card">
+          <div class="t-stage t-stage-t3">
+            <div class="t-stage-head">
+              <span class="t-pill-tag" style="background:#FACC15;color:#0F172A;">TEMA 3 · PRO İLAN &amp; KARŞILAŞTIRMA PORTALI</span>
+              <span style="font-size:11.5px;font-weight:700;color:#F8FAFC;">Vitrin Şeridi + Tablo</span>
+            </div>
+            <div class="mock-t3" aria-hidden="true">
+              <div class="mock-t3-strip">
+                <div class="mock-t3-tile" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=70')"><span>21,9 Mn ₺</span></div>
+                <div class="mock-t3-tile" style="background-image:url('https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=400&q=70')"><span>3,15 Mn ₺</span></div>
+                <div class="mock-t3-tile" style="background-image:url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=400&q=70')"><span>1,80 Mn ₺</span></div>
+              </div>
+              <div class="mock-t3-row">
+                <strong>#PRT-1041 · Kadıköy Suadiye 3+1 Sıfır Daire</strong>
+                <strong class="num" style="color:#B91C1C;">14.750.000 ₺</strong>
+              </div>
+            </div>
+          </div>
+          <div class="t-info">
+            <h3>Yüksek Yoğunluklu İlan Portalı &amp; Karşılaştırma</h3>
+            <p>Üstte fotoğraflı fırsat vitrin kuşağı, altta ise yüzlerce ilanı tek ekranda hızla süzüp 2–3 ilanı yan yana karşılaştırabilen kurumsal portal yapısı.</p>
+            <ul class="t-points">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Tek tıkla <strong>Detaylı Tablo Listesi</strong> ve <strong>Fotoğraflı Kutu Vitrin</strong> geçişi</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> İlanları seçip <strong>Yan Yana Teknik Özellik Karşılaştırma</strong> çekmecesi</li>
+            </ul>
+            <div class="t-palettes">
+              <div class="t-palettes-label"><span>4 Canlı Renk Seçeneği</span></div>
+              <div class="palette-row">
+                <a class="pal-link" href="./tema-3-kurumsal/index.html?palette=portal"><span class="pal-dot" style="background:#F59E0B"></span>Portal Sarı</a>
+                <a class="pal-link" href="./tema-3-kurumsal/index.html?palette=indigo"><span class="pal-dot" style="background:#4F46E5"></span>İndigo</a>
+                <a class="pal-link" href="./tema-3-kurumsal/index.html?palette=navy"><span class="pal-dot" style="background:#1E3A8A"></span>Lacivert</a>
+                <a class="pal-link" href="./tema-3-kurumsal/index.html?palette=terminal"><span class="pal-dot" style="background:#0B0F17;border:1px solid #fff"></span>Koyu Terminal</a>
+              </div>
+            </div>
+            <a href="./tema-3-kurumsal/index.html" class="t-launch">Tema 3'ü Canlı Deneyimle →</a>
+          </div>
+        </article>
+
+        <!-- TEMA 4 -->
+        <article class="t-showcase-card" style="border-color:rgba(41,151,255,0.45);">
+          <div class="t-stage t-stage-t4">
+            <div class="t-stage-head">
+              <span class="t-pill-tag" style="background:linear-gradient(135deg,#2997FF,#7C3AED);color:#fff;">TEMA 4 · LIQUID GLASS &amp; BENTO STÜDYO</span>
+              <span style="font-size:11.5px;font-weight:700;color:#93C5FD;">Asimetrik Bento &amp; Foto-Scrub</span>
+            </div>
+            <div class="mock-t4" aria-hidden="true">
+              <div class="mock-t4-hero">
+                <span style="font-size:10px;padding:3px 8px;border-radius:99px;background:rgba(0,0,0,0.55);align-self:flex-start;">KEN BURNS SAHNE</span>
+                <div>
+                  <strong style="font-size:13.5px;display:block;">İncek 5+1 Havuzlu Villa</strong>
+                  <span class="num" style="font-size:11.5px;color:#60A5FA;">21.900.000 ₺</span>
+                </div>
+              </div>
+              <div class="mock-t4-side">
+                <div class="mock-t4-box">
+                  <span style="font-size:10px;color:#93C5FD;font-weight:700;">FARE İLE HIZLI GALERİ</span>
+                  <strong style="font-size:12.5px;">Kart Üstünde Çoklu Foto Geçişi</strong>
+                </div>
+                <div class="mock-t4-box">
+                  <span style="font-size:10px;color:#6EE7B7;font-weight:700;">CANLI TAKSİT BENTO</span>
+                  <strong class="num" style="font-size:13px;">68.900 ₺ / Ay</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="t-info">
+            <h3>Liquid Glass &amp; Dinamik Asimetrik Bento Stüdyo</h3>
+            <p>Modern küresel tasarım stüdyoları çizgisinde; buğulu cam komut barı, sinematik Ken-Burns vitrin sahnesi ve fareyi gezdirdikçe fotoğraf değiştiren panoramik Bento kartlar.</p>
+            <ul class="t-points">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Kart üzerinde fareyi sağa-sola gezdirdikçe <strong>anlık çoklu fotoğraf geçişi</strong></li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Manyetik buton etkileşimi, canlı taksit bento kutusu ve takas başvuru formu</li>
+            </ul>
+            <div class="t-palettes">
+              <div class="t-palettes-label"><span>4 Canlı Atmosfer Paleti (Açık &amp; Koyu)</span></div>
+              <div class="palette-row">
+                <a class="pal-link" href="./tema-4-bento/index.html?palette=obsidian"><span class="pal-dot" style="background:#2997FF"></span>Obsidian Aurora</a>
+                <a class="pal-link" href="./tema-4-bento/index.html?palette=pearl"><span class="pal-dot" style="background:#F5F5F7"></span>Cupertino İnci</a>
+                <a class="pal-link" href="./tema-4-bento/index.html?palette=emerald"><span class="pal-dot" style="background:#10B981"></span>Zümrüt &amp; Altın</a>
+                <a class="pal-link" href="./tema-4-bento/index.html?palette=atelier"><span class="pal-dot" style="background:#FF5A36"></span>Atelier Terracotta</a>
+              </div>
+            </div>
+            <a href="./tema-4-bento/index.html" class="t-launch" style="background:linear-gradient(135deg,#2997FF,#1D4ED8);color:#fff;">Tema 4'ü Canlı Deneyimle →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Alt Bölüm: 6 Modüllü Admin Paneli + Birebir Özelleştirme -->
+    <section class="bottom-duo">
+      <div class="duo-panel">
+        <div>
+          <h3>6 Modüllü Kurumsal Yönetim &amp; Ekspertiz Paneli</h3>
+          <p>Hangi temayı seçerseniz seçin arka planda tüm sistemi tek merkezden yönetirsiniz. Araç şeması üzerinde parçaya tıklayarak kaporta ekspertizi işaretlemekten kredi faiz oranlarına kadar her detay hazırdır.</p>
+          <div class="mod-grid">
+            <div class="mod-item">
+              <strong>Tıklanabilir SVG Kaporta Ekspertizi</strong>
+              <span>Kaput, tavan, kapılara tıkladıkça Orijinal / Lokal / Boyalı / Değişen seçimi</span>
+            </div>
+            <div class="mod-item">
+              <strong>Emlak &amp; Vasıta Ortak Envanter</strong>
+              <span>Vitrin, Acil, Takasa Uygun rozetleri ve 4 temada anlık senkron yayın</span>
+            </div>
+            <div class="mod-item">
+              <strong>Müşteri, Randevu &amp; Takas CRM</strong>
+              <span>Siteden gelen takas ve randevu taleplerini durumlarıyla takip etme</span>
+            </div>
+            <div class="mod-item">
+              <strong>Kredi Faizi, Danışman &amp; Duyuru</strong>
+              <span>Konut/taşıt faiz oranları, danışman WhatsApp hatları ve marka ayarları</span>
+            </div>
+          </div>
         </div>
-        <input type="number" id="maxKmInp" class="inp" placeholder="Maksimum KM (örn: 45000)" style="margin-bottom:8px;">
-        <label style="display:flex;align-items:center;gap:7px;font-size:0.81rem;cursor:pointer;">
-          <input type="checkbox" id="undamagedChk">
-          <span>Sadece Hatasız / Boyasız Araçlar</span>
-        </label>
+        <a href="./admin.html" class="t-launch" style="background:#FACC15;color:#090B10;">6 Modüllü Yönetim Panelini Canlı Test Et →</a>
       </div>
 
-      <div class="filter-group">
-        <span class="filter-label">Hızlı İletişim &amp; Ekspertiz</span>
-        <p style="margin:0 0 10px;font-size:0.79rem;color:var(--ink-muted);">Tüm gayrimenkul ve araç ilanlarımız yerinde ekspertiz ve şeffaf portföy güvencesiyle sunulur.</p>
-        <a class="btn btn-outline" href="admin.html" style="width:100%;">Admin Panelini Canlı Test Et →</a>
+      <div class="duo-panel">
+        <div>
+          <h3>Beğendiğiniz Örnek Site veya Ek Özellikler Birebir Uyarlanır</h3>
+          <p>Bu 4 farklı tasarım konsepti, işçilik ve hızımızı görmeniz için örnek olarak hazırlandı. Beğendiğiniz başka bir referans site, kurumsal kimliğinize özel renk/tipografi veya ek yazılım modülleri varsa tamamını istediğiniz gibi şekillendiriyoruz:</p>
+          <div class="custom-chips">
+            <span>Örnek Siteye Göre Özel Arayüz</span>
+            <span>Danışman / Galeri Alt Üyelik Sistemi</span>
+            <span>Sahibinden &amp; XML İlan Entegrasyonu</span>
+            <span>Filigranlı Çoklu Fotoğraf Yükleme</span>
+            <span>İl / İlçe / Mahalle Harita Seçimi</span>
+            <span>Plaka &amp; Tramer Bilgi Alanları</span>
+            <span>Çoklu Dil (TR / EN / AR / RU)</span>
+            <span>SEO &amp; Anahtar Teslim Sunucu Kurulumu</span>
+          </div>
+        </div>
+        <a id="hubWaLink" href="https://wa.me/905017037004" target="_blank" rel="noopener" class="t-launch" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid var(--line-strong);">WhatsApp İletişim Hattı Önizlemesi</a>
       </div>
-    </aside>
-
-    <section>
-      <div class="results-bar">
-        <div class="results-count" id="resultsCount">8 aktif ilan listeleniyor</div>
-        <div style="font-size:0.8rem;color:var(--ink-muted);">İlan kartlarından ekspertiz şemasını ve tapu detayını inceleyebilirsiniz</div>
-      </div>
-
-      <div class="listings-grid" id="listingsGrid"></div>
     </section>
   </main>
 
-  <div class="modal-backdrop" id="detailModal" hidden>
-    <div class="modal-card" id="detailModalContent" role="dialog" aria-modal="true"></div>
-  </div>
+  <script src="./assets/portfolio-engine.js"></script>
+  <script>
+    (function () {
+      const cfg = PortfoyEngine.getConfig();
+      const list = PortfoyEngine.getListings();
+      document.getElementById('hubBrandName').textContent = cfg.siteName;
+      document.getElementById('hubBrandSlogan').textContent = cfg.siteSlogan;
 
-  <script src="assets/app.js"></script>
+      const totalVal = list.reduce((s, x) => s + Number(x.price || 0), 0);
+      document.getElementById('mTotalCount').textContent = list.length + ' Aktif İlan';
+      document.getElementById('mTotalVolume').textContent = PortfoyEngine.formatShortPin(totalVal);
+
+      if (cfg.phone) {
+        document.getElementById('hubWaLink').href = 'https://wa.me/' + cfg.phone;
+      }
+
+      // Sağ Hero Görsel Sahnesini Canlı Döndür (Reduced Motion Korumalı)
+      const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const featured = list.filter(x => x.featured);
+      let dIdx = 0;
+      if (!reduced && featured.length > 1) {
+        setInterval(() => {
+          if (document.hidden) return;
+          dIdx = (dIdx + 1) % featured.length;
+          const it = featured[dIdx];
+          if (!it || !it.images || !it.images[0]) return;
+          document.getElementById('deckMainPhoto').style.backgroundImage = `url('${it.images[0]}')`;
+          document.getElementById('deckMainTitle').textContent = it.title;
+          document.getElementById('deckMainPrice').textContent = PortfoyEngine.formatPrice(it.price, it.dealType);
+        }, 4200);
+      }
+
+      PortfoyEngine.mountThemeSwitcher('hub', './');
+    })();
+  </script>
 </body>
 </html>

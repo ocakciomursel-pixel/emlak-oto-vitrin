@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="tr" data-palette="rausch">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tema 1: Haritalı Pazar Yeri &amp; Keşif — PortföyTR Emlak &amp; Vasıta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --canvas: #FFFFFF;
+      --surface: #F7F7F7;
+      --card: #FFFFFF;
+      --ink: #222222;
+      --muted: #6A6A6A;
+      --line: #DDDDDD;
+      --line-soft: #EBEBEB;
+      --accent: #FF385C;
+      --accent-dark: #E00B41;
+      --accent-soft: #FFF0F3;
+      --map-bg: #EEF3F7;
+      --map-land: #DCE6EE;
+      --pin-bg: #FFFFFF;
+      --pin-ink: #222222;
+    }
+    [data-palette="ocean"] {
+      --accent: #0066CC;
+      --accent-dark: #004C99;
+      --accent-soft: #EDF5FF;
+    }
+    [data-palette="emerald"] {
+      --accent: #0F766E;
+      --accent-dark: #115E59;
+      --accent-soft: #F0FDFA;
+    }
+    [data-palette="midnight"] {
+      --canvas: #111317;
+      --surface: #1A1D24;
+      --card: #181B22;
+      --ink: #F3F4F6;
+      --muted: #9CA3AF;
+      --line: #2B303B;
+      --line-soft: #232730;
+      --accent: #FF385C;
+      --accent-dark: #FB7185;
+      --accent-soft: #2D161E;
+      --map-bg: #151922;
+      --map-land: #202736;
+      --pin-bg: #232834;
+      --pin-ink: #F9FAFB;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--canvas);
+      color: var(--ink);
+      font-size: 14.5px;
+      line-height: 1.48;
+      overflow-x: hidden;
+    }
+    button, input, select { font: inherit; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    /* Airbnb-inspired Clean White Header + Floating Segmented Pill Search */
+    .t1-header {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      background: var(--canvas);
+      border-bottom: 1px solid var(--line-soft);
+      padding: 14px 28px;
+    }
+    .t1-header-top {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .t1-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+    .t1-logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* Segmented Pill Search Bar */
+    .pill-search {
+      display: flex;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 9999px;
+      padding: 5px 6px 5px 18px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+      gap: 6px;
+      flex-wrap: wrap;
+      transition: box-shadow 0.2s ease;
+    }
+    .pill-search:focus-within {
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+      border-color: var(--ink);
+    }
+    .pill-seg {
+      display: flex;
+      flex-direction: column;
+      padding: 3px 12px;
+      border-right: 1px solid var(--line-soft);
+    }
+    .pill-seg:last-of-type { border-right: 0; }
+    .pill-seg label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .pill-seg input, .pill-seg select {
+      border: 0;
+      background: transparent;
+      font-size: 13px;
+      color: var(--muted);
+      outline: none;
+      padding: 0;
+      min-width: 110px;
+    }
+    .pill-orb {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.15s;
+    }
+    .pill-orb:hover { transform: scale(1.06); background: var(--accent-dark); }
+
+    .t1-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .palette-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--line-soft);
+    }
+    .p-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      padding: 0;
+    }
+    .p-dot.active { border-color: var(--ink); transform: scale(1.12); }
+
+    .pill-btn {
+      height: 38px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, border-color 0.15s;
+    }
+    .pill-btn:hover { border-color: var(--ink); }
+    .pill-btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Visual Category Ribbon */
+    .cat-ribbon {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid var(--line-soft);
+      overflow-x: auto;
+    }
+    .cat-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cat-item {
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line-soft);
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.18s ease;
+    }
+    .cat-item.is-active {
+      background: var(--ink);
+      color: var(--canvas);
+      border-color: var(--ink);
+    }
+
+    /* Split Screen Marketplace + Interactive Map */
+    .split-stage {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 22px 28px 80px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) 440px;
+      gap: 24px;
+      align-items: start;
+    }
+    .split-stage.map-hidden {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .split-stage.map-hidden .map-pane { display: none; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 22px;
+    }
+
+    .air-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .air-media {
+      position: relative;
+      aspect-ratio: 16 / 11;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .air-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .air-card:hover .air-media img {
+      transform: scale(1.045);
+    }
+    .air-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.94);
+      color: #111;
+      font-size: 11.5px;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .air-fav {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(17, 17, 17, 0.45);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .air-fav.liked { background: var(--accent); transform: scale(1.14); }
+    .air-swap {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.82);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .air-meta-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .air-loc { font-weight: 700; font-size: 15px; }
+    .air-code { font-size: 12px; color: var(--muted); }
+    .air-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .air-specs {
+      font-size: 13px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .air-price {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    /* Interactive Stylized Map */
+    .map-pane {
+      position: sticky;
+      top: 92px;
+      height: calc(100vh - 120px);
+      min-height: 500px;
+      border-radius: 22px;
+      background: var(--map-bg);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: sticky;
+    }
+    .map-canvas {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--pin-bg);
+      color: var(--pin-ink);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.16);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s, color 0.15s;
+      z-index: 5;
+    }
+    .map-pin:hover, .map-pin.is-hot {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translate(-50%, -58%) scale(1.12);
+      z-index: 20;
+    }
+    .map-preview-card {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 12px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+      z-index: 30;
+    }
+    .map-preview-card[hidden] { display: none; }
+
+    /* Modal */
+    .t1-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0,0,0,0.58);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+    .t1-modal[hidden] { display: none; }
+    .t1-dialog {
+      width: 100%;
+      max-width: 940px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--card);
+      border-radius: 24px;
+      padding: 26px;
+      border: 1px solid var(--line);
+    }
+    .t1-dialog-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 1040px) {
+      .split-stage { grid-template-columns: 1fr; }
+      .map-pane { position: relative; top: 0; height: 380px; min-height: 360px; order: -1; }
+      .t1-dialog-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .t1-header, .cat-ribbon, .split-stage { padding-left: 16px; padding-right: 16px; }
+      .pill-search { width: 100%; border-radius: 18px; padding: 10px; }
+      .pill-seg { width: 46%; border-right: 0; padding: 4px 6px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="t1-header">
+    <div class="t1-header-top">
+      <a class="t1-logo" href="../index.html">
+        <span class="t1-logo-mark">PT</span>
+        <span data-brand-title>PortföyTR</span>
+      </a>
+
+      <div class="pill-search" role="search">
+        <div class="pill-seg">
+          <label for="fSector">Kategori</label>
+          <select id="fSector">
+            <option value="all">Emlak &amp; Vasıta</option>
+            <option value="emlak">Sadece Emlak</option>
+            <option value="oto">Sadece Vasıta</option>
+          </select>
+        </div>
+        <div class="pill-seg">
+          <label for="fCity">Konum</label>
+          <select id="fCity">
+            <option value="all">Tüm Türkiye</option>
+            <option value="İstanbul">İstanbul</option>
+            <option value="Ankara">Ankara</option>
+            <option value="İzmir">İzmir</option>
+            <option value="Bursa">Bursa</option>
+            <option value="Antalya">Antalya</option>
+          </select>
+        </div>
+        <div class="pill-seg">
+          <label for="fQuery">Arama</label>
+          <input id="fQuery" type="search" placeholder="Semt, BMW, 3+1, Villa...">
+        </div>
+        <div class="pill-seg">
+          <label for="fMax">Üst Bütçe</label>
+          <select id="fMax">
+            <option value="0">Limitsiz ₺</option>
+            <option value="2500000">2.500.000 ₺'ye kadar</option>
+            <option value="5000000">5.000.000 ₺'ye kadar</option>
+            <option value="15000000">15.000.000 ₺'ye kadar</option>
+          </select>
+        </div>
+        <button type="button" class="pill-orb" id="btnFocusSearch" aria-label="Portföyde ara">⌕</button>
+      </div>
+
+      <div class="t1-actions">
+        <div class="palette-bar" aria-label="Renk seçenekleri">
+          <button type="button" class="p-dot active" style="background:#FF385C;" data-pal="rausch" title="Mercan Rausch"></button>
+          <button type="button" class="p-dot" style="background:#0066CC;" data-pal="ocean" title="Okyanus Mavisi"></button>
+          <button type="button" class="p-dot" style="background:#0F766E;" data-pal="emerald" title="Zümrüt Yeşil"></button>
+          <button type="button" class="p-dot" style="background:#181B22;" data-pal="midnight" title="Koyu Gece"></button>
+        </div>
+        <button type="button" class="pill-btn" id="toggleMapBtn">Haritayı Gizle</button>
+        <a class="pill-btn pill-btn-primary" href="../admin.html">+ İlan Yönetimi</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="cat-ribbon">
+    <div class="cat-pills">
+      <button type="button" class="cat-item is-active" data-quick-filter="all">Tüm İlanlar</button>
+      <button type="button" class="cat-item" data-quick-filter="featured">Vitrin Seçkisi</button>
+      <button type="button" class="cat-item" data-quick-filter="emlak">Konut &amp; Villa</button>
+      <button type="button" class="cat-item" data-quick-filter="oto">Otomobil &amp; SUV</button>
+      <button type="button" class="cat-item" data-quick-filter="hatasiz">Hatasız Boyasız Oto</button>
+      <button type="button" class="cat-item" data-quick-filter="swap">Araç Takasına Uygun</button>
+      <button type="button" class="cat-item" data-quick-filter="rent">Kiralık Portföy</button>
+    </div>
+    <div style="font-size:13px;color:var(--muted);white-space:nowrap;" id="t1Count">9 ilan gösteriliyor</div>
+  </div>
+
+  <main class="split-stage" id="splitStage">
+    <section class="cards-grid" id="t1Grid" aria-label="İlan vitrini"></section>
+
+    <aside class="map-pane" aria-label="Canlı fiyat haritası">
+      <div class="map-canvas" id="mapCanvas">
+        <svg viewBox="0 0 600 420" width="100%" height="100%" preserveAspectRatio="none" style="opacity:0.9;">
+          <rect width="600" height="420" fill="var(--map-bg)"/>
+          <!-- Stilize Türkiye kıyı ve bölge topografyası -->
+          <path d="M70,115 Q145,75 245,95 T430,100 Q525,110 555,165 Q560,245 495,285 Q380,315 265,325 Q165,335 110,275 Q60,210 70,115 Z" fill="var(--map-land)" stroke="var(--line)" stroke-width="2"/>
+          <path d="M120,140 L310,185 L470,165 M295,105 L310,305" stroke="var(--line)" stroke-width="1" stroke-dasharray="5 5" fill="none"/>
+          <text x="165" y="108" font-size="11" fill="var(--muted)" font-weight="600">MARMARA</text>
+          <text x="295" y="180" font-size="11" fill="var(--muted)" font-weight="600">İÇ ANADOLU</text>
+          <text x="112" y="242" font-size="11" fill="var(--muted)" font-weight="600">EGE</text>
+          <text x="245" y="312" font-size="11" fill="var(--muted)" font-weight="600">AKDENİZ</text>
+        </svg>
+        <div id="mapPinsLayer"></div>
+        <div class="map-preview-card" id="mapPreview" hidden></div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="t1-modal" id="t1Modal" hidden>
+    <div class="t1-dialog" id="t1DialogBody"></div>
+  </div>
+
+  <script src="../assets/portfolio-engine.js"></script>
+  <script>
+    (function () {
+      const E = window.PortfoyEngine;
+      const cfg = E.getConfig();
+      document.querySelectorAll('[data-brand-title]').forEach(el => { el.textContent = cfg.siteName; });
+      E.mountThemeSwitcher('t1', '../');
+
+      let quick = 'all';
+      const liked = new Set();
+
+      document.querySelectorAll('[data-pal]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-palette', btn.getAttribute('data-pal'));
+          document.querySelectorAll('[data-pal]').forEach(b => b.classList.toggle('active', b === btn));
+        });
+      });
+
+      const stage = document.getElementById('splitStage');
+      const mapBtn = document.getElementById('toggleMapBtn');
+      mapBtn.addEventListener('click', () => {
+        const hidden = stage.classList.toggle('map-hidden');
+        mapBtn.textContent = hidden ? 'Haritayı Göster' : 'Haritayı Gizle';
+      });
+
+      function filterList() {
+        const sec = document.getElementById('fSector').value;
+        const city = document.getElementById('fCity').value;
+        const q = document.getElementById('fQuery').value.trim().toLowerCase();
+        const max = Number(document.getElementById('fMax').value || 0);
+
+        return E.getListings().filter(it => {
+          if (sec !== 'all' && it.sector !== sec) return false;
+          if (city !== 'all' && it.city !== city) return false;
+          if (max > 0 && it.price > max) return false;
+          if (q && !(it.title + ' ' + it.city + ' ' + it.district + ' ' + it.id).toLowerCase().includes(q)) return false;
+          if (quick === 'featured' && !it.featured) return false;
+          if (quick === 'emlak' && it.sector !== 'emlak') return false;
+          if (quick === 'oto' && it.sector !== 'oto') return false;
+          if (quick === 'hatasiz' && (it.sector !== 'oto' || !(it.damageSummary || '').toLowerCase().includes('boyasız'))) return false;
+          if (quick === 'swap' && !it.swapOk) return false;
+          if (quick === 'rent' && it.dealType !== 'Kiralık') return false;
+          return true;
+        });
+      }
+
+      function render() {
+        const list = filterList();
+        document.getElementById('t1Count').textContent = list.length + ' doğrulanmış ilan';
+        const grid = document.getElementById('t1Grid');
+        const pins = document.getElementById('mapPinsLayer');
+
+        grid.innerHTML = list.map(it => {
+          const isEm = it.sector === 'emlak';
+          const spec = isEm
+            ? `${it.rooms} · ${it.sqmNet} m² net · ${it.buildingAge}`
+            : `${it.year} · ${Number(it.km).toLocaleString('tr-TR')} km · ${it.damageSummary}`;
+          const fb = E.makeFallbackSvg(it.title.slice(0, 26), '#1e293b');
+          return `
+            <article class="air-card" data-card-id="${it.id}">
+              <div class="air-media">
+                <img src="${it.images[0]}" alt="${it.title}" loading="lazy" onerror="this.onerror=null;this.src='${fb}';">
+                <span class="air-tag">${isEm ? 'Emlak · ' + it.dealType : 'Vasıta · Ekspertizli'}</span>
+                <button type="button" class="air-fav ${liked.has(it.id) ? 'liked' : ''}" data-fav="${it.id}" aria-label="Favorilere ekle">♥</button>
+                ${it.swapOk ? '<span class="air-swap">Takasa Uygun</span>' : ''}
+              </div>
+              <div class="air-meta-top">
+                <span class="air-loc">${it.city}, ${it.district.split('/')[0].trim()}</span>
+                <span class="air-code num">#${it.id}</span>
+              </div>
+              <h3 class="air-title">${it.title}</h3>
+              <div class="air-specs">${spec}</div>
+              <div class="air-price num">${E.formatPrice(it.price, it.dealType)}</div>
+            </article>`;
+        }).join('');
+
+        pins.innerHTML = list.map((it, idx) => {
+          const x = it.mapX || (22 + (idx * 13) % 60);
+          const y = it.mapY || (24 + (idx * 17) % 58);
+          return `<button type="button" class="map-pin num" data-pin-id="${it.id}" style="left:${x}%;top:${y}%;">${E.formatShortPin(it.price)}</button>`;
+        }).join('');
+
+        grid.querySelectorAll('.air-card').forEach(card => {
+          const id = card.getAttribute('data-card-id');
+          card.addEventListener('mouseenter', () => {
+            const p = pins.querySelector(`[data-pin-id="${id}"]`);
+            if (p) p.classList.add('is-hot');
+          });
+          card.addEventListener('mouseleave', () => {
+            const p = pins.querySelector(`[data-pin-id="${id}"]`);
+            if (p) p.classList.remove('is-hot');
+          });
+          card.addEventListener('click', (ev) => {
+            if (ev.target.closest('[data-fav]')) return;
+            openModal(id);
+          });
+        });
+
+        grid.querySelectorAll('[data-fav]').forEach(btn => {
+          btn.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            const id = btn.getAttribute('data-fav');
+            if (liked.has(id)) liked.delete(id); else liked.add(id);
+            btn.classList.toggle('liked');
+          });
+        });
+
+        pins.querySelectorAll('[data-pin-id]').forEach(pin => {
+          pin.addEventListener('click', () => showMapPreview(pin.getAttribute('data-pin-id')));
+        });
+      }
+
+      function showMapPreview(id) {
+        const it = E.getListings().find(x => x.id === id);
+        const box = document.getElementById('mapPreview');
+        if (!it || !box) return;
+        box.hidden = false;
+        box.innerHTML = `
+          <img src="${it.images[0]}" alt="${it.title}" style="width:96px;height:76px;object-fit:cover;border-radius:10px;">
+          <div style="min-width:0;">
+            <div style="font-size:12px;color:var(--muted);">${it.city} · #${it.id}</div>
+            <div style="font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${it.title}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+              <strong class="num" style="color:var(--accent);">${E.formatPrice(it.price, it.dealType)}</strong>
+              <button type="button" class="pill-btn pill-btn-primary" style="height:28px;padding:0 12px;font-size:12px;" id="openFromMapBtn">İncele</button>
+            </div>
+          </div>`;
+        document.getElementById('openFromMapBtn').onclick = () => openModal(id);
+      }
+
+      function openModal(id) {
+        const it = E.getListings().find(x => x.id === id);
+        if (!it) return;
+        const modal = document.getElementById('t1Modal');
+        const body = document.getElementById('t1DialogBody');
+        const isEm = it.sector === 'emlak';
+        const monthly = E.calcMonthlyInstallment(it.price * 0.6, isEm ? cfg.interestRateEstate : cfg.interestRateAuto, isEm ? 120 : 36);
+
+        body.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;">
+            <div>
+              <span style="font-size:12px;color:var(--muted);font-weight:600;">#${it.id} · ${it.city} / ${it.district} · Danışman: ${it.consultant || 'Portföy Ekibi'}</span>
+              <h2 style="margin:4px 0 0;font-size:1.35rem;">${it.title}</h2>
+            </div>
+            <button type="button" class="pill-btn" id="closeT1Modal">Kapat ✕</button>
+          </div>
+          <div class="t1-dialog-grid">
+            <div>
+              <img src="${it.images[0]}" alt="${it.title}" style="width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:16px;">
+              <p style="margin:14px 0;color:var(--muted);line-height:1.6;">${it.desc}</p>
+              <div style="padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line-soft);">
+                <div style="font-size:12px;color:var(--muted);">Tahmini %60 Finansman Örnek Taksit (${isEm ? '120 Ay' : '36 Ay'})</div>
+                <strong class="num" style="font-size:1.1rem;">Aylık ~${monthly.toLocaleString('tr-TR')} ₺</strong>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div class="num" style="font-size:1.75rem;font-weight:700;color:var(--accent);">${E.formatPrice(it.price, it.dealType)}</div>
+              ${isEm ? `
+                <div style="padding:16px;border-radius:16px;background:var(--surface);display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;">
+                  <div><span style="color:var(--muted);display:block;">Oda Sayısı</span><strong>${it.rooms}</strong></div>
+                  <div><span style="color:var(--muted);display:block;">Brüt / Net</span><strong>${it.sqmGross || it.sqmNet + 20} / ${it.sqmNet} m²</strong></div>
+                  <div><span style="color:var(--muted);display:block;">Bulunduğu Kat</span><strong>${it.floor || 'Ara Kat'}</strong></div>
+                  <div><span style="color:var(--muted);display:block;">Isıtma</span><strong>${it.heating}</strong></div>
+                  <div style="grid-column:1/-1;"><span style="color:var(--muted);display:block;">Tapu &amp; Takas</span><strong>${it.deed}</strong></div>
+                </div>
+              ` : `
+                <div style="padding:14px;border-radius:16px;background:var(--surface);">
+                  <strong style="display:block;margin-bottom:8px;">Görsel Kaporta &amp; Ekspertiz Şeması (${it.tramer || '0 ₺ Tramer'})</strong>
+                  ${E.renderEkspertizSvg(it.ekspertiz, false)}
+                </div>
+              `}
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;">
+                <a class="pill-btn pill-btn-primary" style="justify-content:center;" target="_blank" rel="noopener" href="https://wa.me/${cfg.phone}?text=${encodeURIComponent(it.id + ' nolu ' + it.title + ' ilanı için bilgi almak istiyorum.')}">WhatsApp ile Sor</a>
+                <a class="pill-btn" style="justify-content:center;" href="tel:+${cfg.phone}">${cfg.phoneDisplay}</a>
+              </div>
+            </div>
+          </div>`;
+        modal.hidden = false;
+        document.getElementById('closeT1Modal').onclick = () => { modal.hidden = true; };
+      }
+
+      document.getElementById('t1Modal').addEventListener('click', e => {
+        if (e.target.id === 't1Modal') e.target.hidden = true;
+      });
+
+      ['fSector', 'fCity', 'fQuery', 'fMax'].forEach(id => {
+        document.getElementById(id).addEventListener('input', render);
+        document.getElementById(id).addEventListener('change', render);
+      });
+      document.getElementById('btnFocusSearch').addEventListener('click', () => document.getElementById('fQuery').focus());
+
+      document.querySelectorAll('[data-quick-filter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          quick = btn.getAttribute('data-quick-filter');
+          document.querySelectorAll('[data-quick-filter]').forEach(b => b.classList.toggle('is-active', b === btn));
+          render();
+        });
+      });
+
+      render();
+    })();
+  </script>
+  <script src="../assets/motion-polish.js"></script>
+</body>
+</html>

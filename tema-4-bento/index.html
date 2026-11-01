@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="tr" data-palette="obsidian">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tema 4: Liquid Glass &amp; Dinamik Bento Stüdyo — PortföyTR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --display: 'Outfit', system-ui, -apple-system, sans-serif;
+      --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+
+      --canvas: #09090B;
+      --surface-1: #131317;
+      --surface-2: #1B1C22;
+      --glass: rgba(20, 21, 27, 0.72);
+      --glass-border: rgba(255, 255, 255, 0.11);
+      --ink: #FAFAFC;
+      --muted: #9CA3AF;
+      --accent: #2997FF;
+      --accent-2: #7C3AED;
+      --accent-ink: #FFFFFF;
+      --pill-bg: rgba(255, 255, 255, 0.08);
+      --shadow-card: 0 22px 50px rgba(0, 0, 0, 0.45);
+      --aura-1: rgba(41, 151, 255, 0.18);
+      --aura-2: rgba(124, 58, 237, 0.14);
+    }
+
+    [data-palette="pearl"] {
+      --canvas: #F5F5F7;
+      --surface-1: #FFFFFF;
+      --surface-2: #EAEAEF;
+      --glass: rgba(255, 255, 255, 0.76);
+      --glass-border: rgba(17, 20, 28, 0.09);
+      --ink: #1D1D1F;
+      --muted: #6E6E73;
+      --accent: #0071E3;
+      --accent-2: #00A3FF;
+      --accent-ink: #FFFFFF;
+      --pill-bg: rgba(29, 29, 31, 0.06);
+      --shadow-card: 0 20px 44px rgba(15, 23, 42, 0.08);
+      --aura-1: rgba(0, 113, 227, 0.10);
+      --aura-2: rgba(56, 189, 248, 0.09);
+    }
+
+    [data-palette="emerald"] {
+      --canvas: #07110E;
+      --surface-1: #0E1D19;
+      --surface-2: #152923;
+      --glass: rgba(13, 27, 23, 0.76);
+      --glass-border: rgba(16, 185, 129, 0.18);
+      --ink: #F0FDF4;
+      --muted: #94A39E;
+      --accent: #10B981;
+      --accent-2: #D4AF37;
+      --accent-ink: #04130E;
+      --pill-bg: rgba(255, 255, 255, 0.08);
+      --shadow-card: 0 24px 52px rgba(0, 0, 0, 0.52);
+      --aura-1: rgba(16, 185, 129, 0.16);
+      --aura-2: rgba(212, 175, 55, 0.12);
+    }
+
+    [data-palette="atelier"] {
+      --canvas: #110C0A;
+      --surface-1: #1B1411;
+      --surface-2: #261C18;
+      --glass: rgba(27, 20, 17, 0.76);
+      --glass-border: rgba(255, 148, 114, 0.15);
+      --ink: #FDF8F6;
+      --muted: #B4A29B;
+      --accent: #FF5A36;
+      --accent-2: #F59E0B;
+      --accent-ink: #FFFFFF;
+      --pill-bg: rgba(255, 255, 255, 0.08);
+      --shadow-card: 0 24px 52px rgba(0, 0, 0, 0.52);
+      --aura-1: rgba(255, 90, 54, 0.17);
+      --aura-2: rgba(245, 158, 11, 0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+    ::-webkit-scrollbar { width: 9px; height: 9px; }
+    ::-webkit-scrollbar-track { background: var(--canvas); }
+    ::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 99px; border: 2px solid var(--canvas); }
+
+    body {
+      font-family: var(--sans);
+      background:
+        radial-gradient(900px 460px at 14% -4%, var(--aura-1), transparent 65%),
+        radial-gradient(820px 440px at 88% 4%, var(--aura-2), transparent 62%),
+        var(--canvas);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+      padding-bottom: 92px;
+      transition: background-color 0.35s ease, color 0.3s ease;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; color: inherit; }
+    .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+    .container {
+      max-width: 1420px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Floating Liquid Glass Header */
+    .glass-nav-wrap {
+      position: sticky;
+      top: 14px;
+      z-index: 95;
+      padding: 0 20px;
+      margin-top: 14px;
+    }
+    .glass-nav {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 11px 18px;
+      border-radius: 999px;
+      background: var(--glass);
+      backdrop-filter: blur(22px) saturate(175%);
+      -webkit-backdrop-filter: blur(22px) saturate(175%);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .bento-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bento-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .bento-brand strong {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .sector-pills {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      flex-wrap: wrap;
+    }
+    .sector-pill {
+      padding: 7px 15px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      color: var(--muted);
+    }
+    .sector-pill.active {
+      background: var(--ink);
+      color: var(--canvas);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .palette-orbs {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+    }
+    .orb-btn {
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .orb-btn:hover { transform: scale(1.16); }
+    .orb-btn.active { border-color: var(--ink); transform: scale(1.14); }
+
+    /* Asimetrik Sinematik Bento Hero Sahnesi */
+    .bento-hero {
+      padding: 26px 0 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .cinema-stage {
+      position: relative;
+      min-height: 510px;
+      border-radius: 28px;
+      overflow: hidden;
+      background: var(--surface-1);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 26px;
+      isolation: isolate;
+    }
+    .cinema-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.04);
+      transition: background-image 0.55s ease, transform 5.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cinema-stage.kenburns .cinema-bg {
+      transform: scale(1.11);
+    }
+    .cinema-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(8,9,13,0.32) 0%, rgba(8,9,13,0.18) 38%, rgba(8,9,13,0.90) 100%);
+    }
+
+    .cinema-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .glass-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(15, 17, 23, 0.62);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulseRing 2s infinite;
+    }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { box-shadow: 0 0 0 9px rgba(34, 197, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    .cinema-bottom {
+      color: #fff;
+    }
+    .cinema-title {
+      font-family: var(--display);
+      font-size: clamp(26px, 3.1vw, 42px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      max-width: 660px;
+      margin-bottom: 12px;
+    }
+    .cinema-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .cinema-specs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .cinema-specs span {
+      padding: 6px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .cinema-price {
+      font-family: var(--mono);
+      font-size: clamp(22px, 2.3vw, 30px);
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .cinema-filmstrip {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.14);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .film-thumbs {
+      display: flex;
+      gap: 8px;
+    }
+    .film-thumb {
+      width: 62px;
+      height: 42px;
+      border-radius: 9px;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      opacity: 0.62;
+      transition: all 0.22s ease;
+    }
+    .film-thumb.active, .film-thumb:hover {
+      opacity: 1;
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+    .magnetic-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: #FFFFFF;
+      color: #09090B;
+      border: none;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    }
+    .magnetic-cta:hover {
+      box-shadow: 0 10px 26px rgba(255,255,255,0.28);
+    }
+
+    /* Sağ 2x2 Bento Hızlı Koleksiyon & Canlı Simülatör Kutuları */
+    .hero-bento-quad {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(246px, 1fr));
+      gap: 18px;
+    }
+    .quad-tile {
+      position: relative;
+      border-radius: 26px;
+      overflow: hidden;
+      padding: 20px;
+      background: var(--surface-1);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      isolation: isolate;
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+    }
+    .quad-tile:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .quad-bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .quad-tile:hover .quad-bg {
+      transform: scale(1.08);
+    }
+    .quad-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(9,9,11,0.22) 0%, rgba(9,9,11,0.88) 100%);
+    }
+    .quad-tile h3 {
+      font-family: var(--display);
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .quad-tile p {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.76);
+      margin-top: 3px;
+    }
+
+    .quad-calc {
+      cursor: default;
+      background: linear-gradient(155deg, var(--surface-1), var(--surface-2));
+    }
+    .quad-calc h3 { color: var(--ink); font-size: 17px; }
+    .quad-calc p { color: var(--muted); }
+    .mini-range {
+      width: 100%;
+      accent-color: var(--accent);
+      margin: 6px 0;
+    }
+
+    /* Arama ve Hızlı Filtre Barı */
+    .filter-dock {
+      margin: 14px 0 26px;
+      padding: 14px 18px;
+      border-radius: 22px;
+      background: var(--surface-1);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 230px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 14px;
+      background: var(--pill-bg);
+      border: 1px solid transparent;
+    }
+    .search-box:focus-within { border-color: var(--accent); }
+    .search-box input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 13.5px;
+    }
+    .dock-select {
+      padding: 9px 14px;
+      border-radius: 13px;
+      background: var(--pill-bg);
+      border: 1px solid var(--glass-border);
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    /* Asimetrik Bento Portföy Izgarası */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-auto-flow: dense;
+      gap: 20px;
+    }
+
+    .bento-card {
+      --mx: 50%;
+      --my: 50%;
+      position: relative;
+      border-radius: 26px;
+      background: var(--surface-1);
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: transform 0.34s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.34s ease;
+    }
+    .bento-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(420px circle at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 45%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .bento-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+    }
+    .bento-card:hover::after { opacity: 1; }
+
+    /* Geniş 2-Sütun Panoramik Bento Kartlar */
+    .bento-card.wide {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+    }
+
+    .card-media {
+      position: relative;
+      height: 256px;
+      overflow: hidden;
+      background: var(--surface-2);
+    }
+    .bento-card.wide .card-media {
+      height: 100%;
+      min-height: 295px;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-card:hover .card-media img {
+      transform: scale(1.05);
+    }
+
+    /* Hover Photo Scrubbing Progress Segments */
+    .scrub-bars {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      gap: 5px;
+      z-index: 4;
+    }
+    .scrub-seg {
+      flex: 1;
+      height: 3px;
+      border-radius: 99px;
+      background: rgba(255,255,255,0.34);
+      overflow: hidden;
+    }
+    .scrub-seg.active {
+      background: #FFFFFF;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    }
+
+    .media-badges {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      z-index: 4;
+    }
+    .m-tag {
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(12px);
+      background: rgba(12, 14, 20, 0.72);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+    .m-tag.urgent {
+      background: rgba(220, 38, 38, 0.88);
+    }
+    .m-tag.swap {
+      background: rgba(16, 185, 129, 0.86);
+    }
+
+    .card-content {
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      flex: 1;
+    }
+    .card-loc {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title {
+      font-family: var(--display);
+      font-size: 18.5px;
+      font-weight: 700;
+      line-height: 1.24;
+      letter-spacing: -0.02em;
+      margin-top: 5px;
+    }
+    .bento-card.wide .card-title {
+      font-size: 22px;
+    }
+    .spec-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .spec-chips span {
+      padding: 5px 10px;
+      border-radius: 9px;
+      background: var(--pill-bg);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .card-footer {
+      padding-top: 13px;
+      border-top: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-price {
+      font-family: var(--mono);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .card-go {
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      font-size: 12.5px;
+      font-weight: 700;
+      transition: background 0.2s, color 0.2s;
+    }
+    .bento-card:hover .card-go {
+      background: var(--accent);
+      color: var(--accent-ink);
+    }
+
+    /* Slide-Up Liquid Glass Detay & Ekspertiz Modalı */
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(5, 6, 10, 0.72);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .sheet-backdrop.open { display: flex; }
+    .glass-sheet {
+      width: min(1100px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 28px;
+      background: var(--surface-1);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      padding: 26px;
+      animation: sheetRise 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes sheetRise {
+      from { opacity: 0; transform: translateY(26px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+    .sheet-main-photo {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: var(--surface-2);
+    }
+    .sheet-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .sheet-thumbs img {
+      width: 76px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      opacity: 0.6;
+      border: 2px solid transparent;
+    }
+    .sheet-thumbs img.active {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+
+    .lead-mini-form {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--pill-bg);
+      border: 1px solid var(--glass-border);
+      display: grid;
+      gap: 10px;
+    }
+    .lead-input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--glass-border);
+      background: var(--surface-1);
+      font-size: 13px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 1120px) {
+      .bento-hero { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bento-card.wide { grid-column: span 2; }
+      .sheet-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .container { padding: 0 16px; }
+      .glass-nav-wrap { padding: 0 12px; }
+      .glass-nav { border-radius: 22px; padding: 12px 14px; }
+      .hero-bento-quad, .bento-grid { grid-template-columns: 1fr; }
+      .bento-card.wide {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+      }
+      .cinema-stage { min-height: 430px; padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Yüzen Liquid Glass Komut Barı -->
+  <div class="glass-nav-wrap">
+    <header class="glass-nav">
+      <a href="../index.html" class="bento-brand">
+        <div class="bento-mark">P4</div>
+        <div>
+          <strong id="t4SiteName">PortföyTR</strong>
+          <span style="font-size:11.5px;color:var(--muted);display:block;line-height:1;">Bento Studio Vitrin</span>
+        </div>
+      </a>
+
+      <nav class="sector-pills" id="sectorNav" aria-label="Kategori Seçimi">
+        <button type="button" class="sector-pill active" data-sec="all">Tüm Portföy</button>
+        <button type="button" class="sector-pill" data-sec="emlak">Konut &amp; Villa</button>
+        <button type="button" class="sector-pill" data-sec="oto">Otomobil &amp; SUV</button>
+        <button type="button" class="sector-pill" data-sec="swap">Araç Takaslı</button>
+      </nav>
+
+      <div class="nav-right">
+        <div class="palette-orbs" aria-label="Canlı Renk Atmosferi">
+          <button type="button" class="orb-btn active" data-pal="obsidian" title="Obsidian Aurora" style="background:linear-gradient(135deg,#09090B,#2997FF);"></button>
+          <button type="button" class="orb-btn" data-pal="pearl" title="Cupertino İnci Beyazı" style="background:linear-gradient(135deg,#FFFFFF,#0071E3);border:1px solid #cbd5e1;"></button>
+          <button type="button" class="orb-btn" data-pal="emerald" title="Zümrüt & Altın" style="background:linear-gradient(135deg,#07110E,#10B981);"></button>
+          <button type="button" class="orb-btn" data-pal="atelier" title="Atelier Terracotta" style="background:linear-gradient(135deg,#1B1411,#FF5A36);"></button>
+        </div>
+        <a href="../admin.html" style="font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:999px;background:var(--accent);color:var(--accent-ink);">Yönetim Paneli</a>
+      </div>
+    </header>
+  </div>
+
+  <main class="container">
+    <!-- Asimetrik Sinematik Bento Vitrin Sahnesi -->
+    <section class="bento-hero" aria-label="Öne Çıkan Koleksiyon">
+      <div class="cinema-stage" id="cinemaStage">
+        <div class="cinema-bg" id="cinemaBg"></div>
+        <div class="cinema-scrim"></div>
+
+        <div class="cinema-top">
+          <span class="glass-chip"><span class="pulse-dot"></span> <span id="cinemaBadge"> Ekspertiz &amp; Tapu Garantili Seçki</span></span>
+          <span class="glass-chip num" id="cinemaCounter">01 / 04</span>
+        </div>
+
+        <div class="cinema-bottom">
+          <h1 class="cinema-title" id="cinemaTitle">Yükleniyor...</h1>
+          <div class="cinema-meta-row">
+            <div class="cinema-specs" id="cinemaSpecs"></div>
+            <div class="cinema-price num" id="cinemaPrice"></div>
+          </div>
+
+          <div class="cinema-filmstrip">
+            <div class="film-thumbs" id="cinemaFilmstrip"></div>
+            <button type="button" class="magnetic-cta" id="cinemaOpenBtn">
+              Detay, Ekspertiz &amp; Kredi Planı
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sağ 2x2 Bento Hızlı Vitrin & Canlı Taksit Simülatörü -->
+      <div class="hero-bento-quad">
+        <article class="quad-tile" data-quick-sec="emlak">
+          <div class="quad-bg" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80')"></div>
+          <div class="quad-overlay"></div>
+          <span class="glass-chip" style="align-self:flex-start;">MİMARİ KONUT &amp; VİLLA</span>
+          <div>
+            <h3 id="quadEstateCount">5 Seçkin Mülk</h3>
+            <p>Müstakil havuzlu villa, sahil rezidans ve yüksek kira getirili ticari</p>
+          </div>
+        </article>
+
+        <article class="quad-tile" data-quick-sec="oto">
+          <div class="quad-bg" style="background-image:url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80')"></div>
+          <div class="quad-overlay"></div>
+          <span class="glass-chip" style="align-self:flex-start;">0 TRAMER SHOWROOM</span>
+          <div>
+            <h3 id="quadAutoCount">4 Ekspertizli Araç</h3>
+            <p>Dijital kaporta şemalı, yetkili servis kayıtlı premium otomobiller</p>
+          </div>
+        </article>
+
+        <div class="quad-tile quad-calc">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h3>Anlık Kredi Simülatörü</h3>
+              <span class="num" style="font-size:12px;color:var(--accent);font-weight:700;" id="qRateTag">%2.79 Oran</span>
+            </div>
+            <p>Tutar kaydırarak aylık taksiti görün</p>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;">
+              <span>Kredi: <strong class="num" id="qLoanVal">2.000.000 ₺</strong></span>
+              <span>60 Ay</span>
+            </div>
+            <input type="range" id="qLoanRange" class="mini-range" min="500000" max="10000000" step="250000" value="2000000" aria-label="Kredi tutarı" />
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:4px;">
+              <span style="font-size:12px;color:var(--muted);">Tahmini Taksit:</span>
+              <strong class="num" style="font-size:18px;color:var(--accent);" id="qMonthlyOut">0 ₺/ay</strong>
+            </div>
+          </div>
+        </div>
+
+        <article class="quad-tile" data-quick-sec="swap">
+          <div class="quad-bg" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80')"></div>
+          <div class="quad-overlay"></div>
+          <span class="glass-chip" style="align-self:flex-start;background:rgba(16,185,129,0.75);">ARAÇ ⇄ KONUT TAKAS</span>
+          <div>
+            <h3>Takasa Açık Portföy</h3>
+            <p>Aracınızı peşinat sayarak konut veya üst segment araç değişimi</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Canlı Arama & Sıralama Barı -->
+    <section class="filter-dock" aria-label="Arama ve Sıralama">
+      <div class="search-box">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" id="bentoSearch" placeholder="Semt, marka, oda sayısı veya ilan kodu ara (Örn: Suadiye, BMW, Villa, Togg)..." />
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <select id="cityFilter" class="dock-select" aria-label="Şehir Filtresi">
+          <option value="all">Tüm Şehirler</option>
+          <option value="İstanbul">İstanbul</option>
+          <option value="Ankara">Ankara</option>
+          <option value="İzmir">İzmir</option>
+          <option value="Bursa">Bursa</option>
+          <option value="Antalya">Antalya</option>
+        </select>
+        <select id="sortFilter" class="dock-select" aria-label="Sıralama">
+          <option value="featured">Vitrin Öncelikli</option>
+          <option value="price-desc">Fiyat: Yüksekten Düşüğe</option>
+          <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
+        </select>
+        <span class="num" style="font-size:12.5px;color:var(--muted);padding:0 6px;" id="resultCountLabel">9 ilan</span>
+      </div>
+    </section>
+
+    <!-- Asimetrik Bento İlan Izgarası (Fare Gezdirdikçe Çoklu Fotoğraf Scrubbing!) -->
+    <section class="bento-grid" id="bentoGrid" aria-label="Portföy Vitrini"></section>
+  </main>
+
+  <!-- Liquid Glass Detay, Kaporta Ekspertiz & Teklif Modalı -->
+  <div class="sheet-backdrop" id="detailBackdrop" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="glass-sheet">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;">
+        <div>
+          <span class="num" style="font-size:12px;color:var(--accent);font-weight:700;" id="sheetCode">PRT-1041</span>
+          <h2 style="font-family:var(--display);font-size:24px;font-weight:800;letter-spacing:-0.02em;" id="sheetTitle">İlan Başlığı</h2>
+        </div>
+        <button type="button" id="sheetCloseBtn" style="padding:8px 14px;border-radius:999px;border:1px solid var(--glass-border);background:var(--pill-bg);cursor:pointer;font-weight:700;">Kapat ✕</button>
+      </div>
+
+      <div class="sheet-grid">
+        <div>
+          <img id="sheetMainImg" class="sheet-main-photo" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="İlan görseli" />
+          <div class="sheet-thumbs" id="sheetThumbs"></div>
+          <p id="sheetDesc" style="margin-top:14px;font-size:14px;color:var(--muted);line-height:1.6;"></p>
+
+          <form class="lead-mini-form" id="bentoLeadForm">
+            <strong style="font-size:14px;">Bu İlan İçin Randevu veya Takas Teklifi İletin</strong>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <input type="text" id="leadName" class="lead-input" placeholder="Adınız Soyadınız" required />
+              <input type="tel" id="leadPhone" class="lead-input" placeholder="Telefonunuz (05...)" required />
+            </div>
+            <input type="text" id="leadNote" class="lead-input" placeholder="Takas aracınız veya randevu günü notunuz..." required />
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="submit" style="flex:1;padding:11px;border-radius:11px;border:none;background:var(--accent);color:var(--accent-ink);font-weight:700;cursor:pointer;">Talebi Yönetim Paneline Gönder</button>
+              <a id="sheetWaBtn" href="#" target="_blank" rel="noopener" style="padding:11px 16px;border-radius:11px;background:#16A34A;color:#fff;font-weight:700;font-size:13px;">WhatsApp'tan Yaz</a>
+            </div>
+            <div id="leadSavedMsg" style="display:none;font-size:12.5px;color:#22C55E;font-weight:700;">Talebiniz kaydedildi! Yönetim panelindeki "Takas &amp; Müşteri Talepleri" sekmesinden canlı görebilirsiniz.</div>
+          </form>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="padding:18px;border-radius:20px;background:var(--pill-bg);border:1px solid var(--glass-border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <span style="font-size:12px;color:var(--muted);display:block;">Satış / Kira Bedeli</span>
+              <strong class="num" style="font-size:26px;color:var(--accent);" id="sheetPrice">0 ₺</strong>
+            </div>
+            <span id="sheetDealBadge" style="padding:6px 12px;border-radius:999px;background:var(--surface-2);font-size:12.5px;font-weight:700;">Satılık</span>
+          </div>
+
+          <div id="sheetDynamicBox" style="padding:18px;border-radius:20px;background:var(--pill-bg);border:1px solid var(--glass-border);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/portfolio-engine.js"></script>
+  <script>
+    (function () {
+      const cfg = PortfoyEngine.getConfig();
+      const allListings = PortfoyEngine.getListings();
+      document.getElementById('t4SiteName').textContent = cfg.siteName;
+
+      document.getElementById('quadEstateCount').textContent =
+        allListings.filter(x => x.sector === 'emlak').length + ' Seçkin Mülk';
+      document.getElementById('quadAutoCount').textContent =
+        allListings.filter(x => x.sector === 'oto').length + ' Ekspertizli Araç';
+
+      // Renk Paleti Geçişi
+      document.querySelectorAll('.orb-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-palette', btn.dataset.pal);
+          document.querySelectorAll('.orb-btn').forEach(b => b.classList.toggle('active', b === btn));
+        });
+      });
+
+      // Mini Kredi Simülatörü
+      const qRange = document.getElementById('qLoanRange');
+      function updateQuickCalc() {
+        const amt = Number(qRange.value);
+        const rate = Number(cfg.interestRateEstate || 2.79);
+        document.getElementById('qRateTag').textContent = '%' + rate + ' Aylık';
+        document.getElementById('qLoanVal').textContent = amt.toLocaleString('tr-TR') + ' ₺';
+        const m = PortfoyEngine.calcMonthlyInstallment(amt, rate, 60);
+        document.getElementById('qMonthlyOut').textContent = m.toLocaleString('tr-TR') + ' ₺/ay';
+      }
+      qRange.addEventListener('input', updateQuickCalc);
+      updateQuickCalc();
+
+      // Sinematik Hero Sahnesi (Cancellable Auto-Rotation + Reduced Motion Korumalı)
+      const heroSlides = allListings.filter(x => x.featured).slice(0, 4);
+      if (!heroSlides.length && allListings.length) heroSlides.push(allListings[0]);
+      let heroIdx = 0;
+      let heroTimer = null;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const stageEl = document.getElementById('cinemaStage');
+
+      function renderHeroSlide(idx) {
+        heroIdx = idx;
+        const item = heroSlides[heroIdx];
+        if (!item) return;
+        const bg = (item.images && item.images[0]) || PortfoyEngine.makeFallbackSvg(item.title, '#1e293b');
+        stageEl.classList.remove('kenburns');
+        document.getElementById('cinemaBg').style.backgroundImage = `url('${bg}')`;
+        void stageEl.offsetWidth;
+        if (!reducedMotion.matches) stageEl.classList.add('kenburns');
+
+        document.getElementById('cinemaBadge').textContent =
+          item.sector === 'oto' ? (item.damageSummary + ' · ' + item.tramer) : (item.city + ' · ' + (item.deed || 'Tapu Hazır'));
+        document.getElementById('cinemaCounter').textContent =
+          `0${heroIdx + 1} / 0${heroSlides.length}`;
+        document.getElementById('cinemaTitle').textContent = item.title;
+        document.getElementById('cinemaPrice').textContent = PortfoyEngine.formatPrice(item.price, item.dealType);
+
+        const specs = item.sector === 'oto'
+          ? [item.year + ' Model', Number(item.km || 0).toLocaleString('tr-TR') + ' KM', item.fuel, item.gear]
+          : [item.rooms, (item.sqmNet || item.sqmGross) + ' m² Net', item.floor, item.heating];
+        document.getElementById('cinemaSpecs').innerHTML = specs.filter(Boolean).map(s => `<span>${s}</span>`).join('');
+
+        document.getElementById('cinemaFilmstrip').innerHTML = heroSlides.map((s, i) => {
+          const tImg = (s.images && s.images[0]) || '';
+          return `<button type="button" aria-label="Vitrin ${i + 1}" class="film-thumb ${i === heroIdx ? 'active' : ''}" data-hidx="${i}" style="background-image:url('${tImg}')"></button>`;
+        }).join('');
+      }
+
+      document.getElementById('cinemaFilmstrip').addEventListener('click', e => {
+        const b = e.target.closest('[data-hidx]');
+        if (!b) return;
+        renderHeroSlide(Number(b.dataset.hidx));
+      });
+
+      document.getElementById('cinemaOpenBtn').addEventListener('click', () => {
+        const item = heroSlides[heroIdx];
+        if (item) openDetailSheet(item.id);
+      });
+
+      // Magnetic CTA micro-interaction
+      const magBtn = document.getElementById('cinemaOpenBtn');
+      magBtn.addEventListener('pointermove', e => {
+        if (reducedMotion.matches) return;
+        const r = magBtn.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width / 2) * 0.22;
+        const dy = (e.clientY - r.top - r.height / 2) * 0.22;
+        magBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+      magBtn.addEventListener('pointerleave', () => {
+        magBtn.style.transform = 'translate(0, 0)';
+      });
+
+      function startHeroAuto() {
+        stopHeroAuto();
+        if (reducedMotion.matches || heroSlides.length < 2) return;
+        heroTimer = setInterval(() => {
+          if (!document.hidden) renderHeroSlide((heroIdx + 1) % heroSlides.length);
+        }, 5200);
+      }
+      function stopHeroAuto() {
+        if (heroTimer) { clearInterval(heroTimer); heroTimer = null; }
+      }
+      stageEl.addEventListener('pointerenter', stopHeroAuto);
+      stageEl.addEventListener('pointerleave', startHeroAuto);
+      renderHeroSlide(0);
+      startHeroAuto();
+
+      // Filtreleme ve Asimetrik Bento Grid Render
+      let activeSec = 'all';
+
+      function setSectorFilter(sec) {
+        activeSec = sec;
+        document.querySelectorAll('#sectorNav .sector-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.sec === sec);
+        });
+        renderBentoGrid();
+      }
+
+      document.getElementById('sectorNav').addEventListener('click', e => {
+        const btn = e.target.closest('[data-sec]');
+        if (btn) setSectorFilter(btn.dataset.sec);
+      });
+
+      document.querySelectorAll('[data-quick-sec]').forEach(tile => {
+        tile.addEventListener('click', () => {
+          setSectorFilter(tile.dataset.quickSec);
+          document.getElementById('bentoGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      document.getElementById('bentoSearch').addEventListener('input', renderBentoGrid);
+      document.getElementById('cityFilter').addEventListener('change', renderBentoGrid);
+      document.getElementById('sortFilter').addEventListener('change', renderBentoGrid);
+
+      function renderBentoGrid() {
+        const q = document.getElementById('bentoSearch').value.trim().toLowerCase();
+        const city = document.getElementById('cityFilter').value;
+        const sort = document.getElementById('sortFilter').value;
+
+        let items = PortfoyEngine.getListings().filter(it => {
+          if (activeSec === 'emlak' && it.sector !== 'emlak') return false;
+          if (activeSec === 'oto' && it.sector !== 'oto') return false;
+          if (activeSec === 'swap' && !it.swapOk) return false;
+          if (city !== 'all' && it.city !== city) return false;
+          if (q) {
+            const hay = `${it.id} ${it.title} ${it.city} ${it.district} ${it.subCategory} ${it.brand || ''} ${it.rooms || ''}`.toLowerCase();
+            if (!hay.includes(q)) return false;
+          }
+          return true;
+        });
+
+        if (sort === 'price-desc') items.sort((a, b) => b.price - a.price);
+        else if (sort === 'price-asc') items.sort((a, b) => a.price - b.price);
+        else items.sort((a, b) => Number(b.featured) - Number(a.featured));
+
+        document.getElementById('resultCountLabel').textContent = items.length + ' ilan listeleniyor';
+
+        const grid = document.getElementById('bentoGrid');
+        grid.innerHTML = items.map((it, idx) => {
+          const isWide = idx === 0 || idx === 4;
+          const imgs = (it.images && it.images.length) ? it.images : [PortfoyEngine.makeFallbackSvg(it.id, '#1e293b')];
+          const chips = it.sector === 'oto'
+            ? [it.year + ' Model', Number(it.km || 0).toLocaleString('tr-TR') + ' km', it.fuel, it.damageSummary]
+            : [it.rooms, (it.sqmNet || it.sqmGross) + ' m²', it.floor, it.dealType];
+
+          return `
+            <article class="bento-card ${isWide ? 'wide' : ''}" data-open-id="${it.id}" data-photos='${JSON.stringify(imgs)}'>
+              <div class="card-media">
+                <div class="scrub-bars">
+                  ${imgs.map((_, pi) => `<span class="scrub-seg ${pi === 0 ? 'active' : ''}"></span>`).join('')}
+                </div>
+                <img src="${imgs[0]}" alt="${it.title}" onerror="this.src=PortfoyEngine.makeFallbackSvg('${it.id}','#1e293b')" />
+                <div class="media-badges">
+                  <span class="m-tag">${it.sector === 'oto' ? 'VASITA · ' + it.subCategory : 'EMLAK · ' + it.subCategory}</span>
+                  <div style="display:flex;gap:5px;">
+                    ${it.urgent ? '<span class="m-tag urgent">ACİL VİTRİN</span>' : ''}
+                    ${it.swapOk ? '<span class="m-tag swap">TAKASLI</span>' : ''}
+                  </div>
+                </div>
+              </div>
+              <div class="card-content">
+                <div>
+                  <div class="card-loc">
+                    <span>${it.city} · ${it.district}</span>
+                    <span class="num">${it.id}</span>
+                  </div>
+                  <h3 class="card-title">${it.title}</h3>
+                  <div class="spec-chips">
+                    ${chips.filter(Boolean).map(c => `<span>${c}</span>`).join('')}
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="card-price">${PortfoyEngine.formatPrice(it.price, it.dealType)}</div>
+                  <span class="card-go">İncele →</span>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Staggered entrance + Hover Photo Scrubbing & Radial Pointer Glow
+        grid.querySelectorAll('.bento-card').forEach((card, i) => {
+          if (!reducedMotion.matches && card.animate) {
+            card.animate(
+              [
+                { opacity: 0, transform: 'translateY(18px) scale(0.97)' },
+                { opacity: 1, transform: 'translateY(0) scale(1)' }
+              ],
+              { duration: 420, delay: Math.min(i * 45, 280), easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'both' }
+            );
+          }
+
+          const media = card.querySelector('.card-media');
+          const imgEl = media.querySelector('img');
+          const segs = media.querySelectorAll('.scrub-seg');
+          let photos = [];
+          try { photos = JSON.parse(card.getAttribute('data-photos') || '[]'); } catch {}
+
+          card.addEventListener('pointermove', e => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          });
+
+          if (photos.length > 1) {
+            media.addEventListener('pointermove', e => {
+              const mr = media.getBoundingClientRect();
+              const ratio = Math.max(0, Math.min(0.999, (e.clientX - mr.left) / mr.width));
+              const pIdx = Math.floor(ratio * photos.length);
+              if (imgEl.dataset.currIdx !== String(pIdx)) {
+                imgEl.dataset.currIdx = String(pIdx);
+                imgEl.src = photos[pIdx];
+                segs.forEach((s, si) => s.classList.toggle('active', si === pIdx));
+              }
+            });
+            media.addEventListener('pointerleave', () => {
+              imgEl.dataset.currIdx = '0';
+              imgEl.src = photos[0];
+              segs.forEach((s, si) => s.classList.toggle('active', si === 0));
+            });
+          }
+
+          card.addEventListener('click', () => openDetailSheet(card.dataset.openId));
+        });
+      }
+
+      // Detay, Ekspertiz SVG & Kredi Sheet Modalı
+      let currentModalItem = null;
+      const backdrop = document.getElementById('detailBackdrop');
+
+      function openDetailSheet(id) {
+        const item = PortfoyEngine.getListings().find(x => x.id === id);
+        if (!item) return;
+        currentModalItem = item;
+        document.getElementById('leadSavedMsg').style.display = 'none';
+        document.getElementById('sheetCode').textContent = item.id + ' · ' + item.city + ' / ' + item.district;
+        document.getElementById('sheetTitle').textContent = item.title;
+        document.getElementById('sheetPrice').textContent = PortfoyEngine.formatPrice(item.price, item.dealType);
+        document.getElementById('sheetDealBadge').textContent = item.dealType + (item.swapOk ? ' · Takasa Uygun' : '');
+        document.getElementById('sheetDesc').textContent = item.desc || '';
+
+        const imgs = (item.images && item.images.length) ? item.images : [PortfoyEngine.makeFallbackSvg(item.id, '#1e293b')];
+        const mainImg = document.getElementById('sheetMainImg');
+        mainImg.src = imgs[0];
+        document.getElementById('sheetThumbs').innerHTML = imgs.map((u, idx) =>
+          `<img src="${u}" alt="Fotoğraf ${idx + 1}" class="${idx === 0 ? 'active' : ''}" data-simg="${u}" />`
+        ).join('');
+
+        const waMsg = encodeURIComponent(`Merhaba, ${item.id} kodlu "${item.title}" ilanınız hakkında bilgi almak istiyorum.`);
+        document.getElementById('sheetWaBtn').href = `https://wa.me/${cfg.phone}?text=${waMsg}`;
+
+        const dyn = document.getElementById('sheetDynamicBox');
+        if (item.sector === 'oto') {
+          const monthly = PortfoyEngine.calcMonthlyInstallment(item.price * 0.5, cfg.interestRateAuto || 3.49, 36);
+          dyn.innerHTML = `
+            <strong style="display:block;font-size:15px;margin-bottom:10px;">Dijital Kaporta Ekspertiz Raporu (${item.damageSummary || 'Ekspertizli'})</strong>
+            ${PortfoyEngine.renderEkspertizSvg(item.ekspertiz, false)}
+            <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--glass-border);font-size:13px;display:flex;justify-content:space-between;">
+              <span>%50 Peşinatlı 36 Ay Taşıt Kredisi Tahmini:</span>
+              <strong class="num" style="color:var(--accent);">${monthly.toLocaleString('tr-TR')} ₺ / ay</strong>
+            </div>
+          `;
+        } else {
+          const monthly = PortfoyEngine.calcMonthlyInstallment(item.price * 0.5, cfg.interestRateEstate || 2.79, 120);
+          dyn.innerHTML = `
+            <strong style="display:block;font-size:15px;margin-bottom:12px;">Gayrimenkul Mimari &amp; Tapu Künyesi</strong>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;">
+              <div style="padding:10px;border-radius:10px;background:var(--surface-1);">Oda Planı: <strong>${item.rooms || '-'}</strong></div>
+              <div style="padding:10px;border-radius:10px;background:var(--surface-1);">Brüt / Net: <strong>${item.sqmGross || '-'} / ${item.sqmNet || '-'} m²</strong></div>
+              <div style="padding:10px;border-radius:10px;background:var(--surface-1);">Bulunduğu Kat: <strong>${item.floor || '-'}</strong></div>
+              <div style="padding:10px;border-radius:10px;background:var(--surface-1);">Bina Yaşı: <strong>${item.buildingAge || '-'}</strong></div>
+              <div style="padding:10px;border-radius:10px;background:var(--surface-1);">Isıtma: <strong>${item.heating || '-'}</strong></div>
+              <div style="padding:10px;border-radius:10px;background:var(--surface-1);">Tapu: <strong>${item.deed || '-'}</strong></div>
+            </div>
+            ${item.dealType === 'Satılık' ? `
+              <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--glass-border);font-size:13px;display:flex;justify-content:space-between;">
+                <span>%50 Peşinatlı 120 Ay Konut Kredisi Tahmini:</span>
+                <strong class="num" style="color:var(--accent);">${monthly.toLocaleString('tr-TR')} ₺ / ay</strong>
+              </div>
+            ` : ''}
+          `;
+        }
+
+        backdrop.classList.add('open');
+      }
+
+      document.getElementById('sheetThumbs').addEventListener('click', e => {
+        const im = e.target.closest('[data-simg]');
+        if (!im) return;
+        document.getElementById('sheetMainImg').src = im.dataset.simg;
+        document.querySelectorAll('#sheetThumbs img').forEach(x => x.classList.toggle('active', x === im));
+      });
+
+      document.getElementById('sheetCloseBtn').addEventListener('click', () => backdrop.classList.remove('open'));
+      backdrop.addEventListener('click', e => { if (e.target === backdrop) backdrop.classList.remove('open'); });
+
+      document.getElementById('bentoLeadForm').addEventListener('submit', e => {
+        e.preventDefault();
+        if (!currentModalItem) return;
+        const leads = PortfoyEngine.getLeads();
+        leads.unshift({
+          id: 'TLP-' + Math.floor(920 + Math.random() * 79),
+          date: 'Az Önce (Bento Vitrin)',
+          name: document.getElementById('leadName').value.trim(),
+          phone: document.getElementById('leadPhone').value.trim(),
+          listingId: currentModalItem.id,
+          type: 'Randevu / Takas Teklifi',
+          note: document.getElementById('leadNote').value.trim(),
+          status: 'Bekliyor'
+        });
+        PortfoyEngine.saveLeads(leads);
+        e.target.reset();
+        document.getElementById('leadSavedMsg').style.display = 'block';
+      });
+
+      renderBentoGrid();
+      PortfoyEngine.mountThemeSwitcher('t4', '../');
+    })();
+  </script>
+  <script src="../assets/motion-polish.js"></script>
+</body>
+</html>

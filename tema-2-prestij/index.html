@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="tr" data-palette="rosso">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tema 2: Lüks Oto Showroom &amp; Mimari Rezidans — PortföyTR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: "Space Grotesk", system-ui, sans-serif;
+      --font-serif: "Cormorant Garamond", Georgia, serif;
+      --font-mono: "JetBrains Mono", monospace;
+
+      --bg: #121316;
+      --bg-elev: #1B1D22;
+      --bg-panel: #22252C;
+      --ink: #F5F6F8;
+      --muted: #9A9FA8;
+      --line: #2E323C;
+      --accent: #DA291C;
+      --accent-ink: #FFFFFF;
+    }
+    [data-palette="bavaria"] {
+      --accent: #1C69D4;
+    }
+    [data-palette="champagne"] {
+      --accent: #C89D54;
+      --accent-ink: #121316;
+    }
+    [data-palette="ivory"] {
+      --bg: #F6F5F1;
+      --bg-elev: #FFFFFF;
+      --bg-panel: #ECEAE3;
+      --ink: #16171A;
+      --muted: #61646B;
+      --line: #D8D5CC;
+      --accent: #16171A;
+      --accent-ink: #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; color: inherit; }
+    .num { font-variant-numeric: tabular-nums; }
+    .wrap { max-width: 1380px; margin: 0 auto; padding: 0 28px; }
+
+    /* Architectural Top Bar (Sharp 2px Geometry — Ferrari/BMW Showroom) */
+    .t2-nav {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .t2-nav-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .t2-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .t2-wordmark {
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .t2-sub {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .t2-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .swatches {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      background: var(--bg-elev);
+    }
+    .sw {
+      width: 16px;
+      height: 16px;
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      padding: 0;
+    }
+    .sw.active { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+    .t2-btn {
+      height: 40px;
+      padding: 0 20px;
+      border: 1px solid var(--line);
+      background: var(--bg-elev);
+      color: var(--ink);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .t2-btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-ink);
+    }
+
+    /* Full-Bleed Architectural Hero Showcase (place-carries-it) */
+    .hero-stage {
+      position: relative;
+      min-height: 540px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-visual {
+      position: relative;
+      min-height: 440px;
+      overflow: hidden;
+      background: #0a0b0d;
+    }
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      animation: shutterReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes shutterReveal {
+      from { clip-path: inset(0 100% 0 0); transform: scale(1.06); }
+      to { clip-path: inset(0 0 0 0); transform: scale(1); }
+    }
+    .hero-info {
+      padding: 46px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--bg-elev);
+      border-left: 1px solid var(--line);
+    }
+    .hero-kicker {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+    .hero-h1 {
+      margin: 12px 0 14px;
+      font-size: clamp(1.75rem, 2.7vw, 2.65rem);
+      line-height: 1.12;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .hero-price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .telemetry-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+      margin: 16px 0 22px;
+      gap: 12px;
+    }
+    .tel-cell span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    .tel-cell strong {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .hero-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+    .hero-thumb-btn {
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .hero-thumb-btn.is-current {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-weight: 700;
+    }
+
+    /* Showroom Filter Strip */
+    .showroom-bar {
+      padding: 26px 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--line);
+    }
+    .tab-strip { display: flex; gap: 6px; flex-wrap: wrap; }
+    .sh-tab {
+      height: 38px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .sh-tab.active {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
+
+    /* Editorial Showroom Grid */
+    .showroom-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 24px;
+    }
+    .sh-card {
+      background: var(--bg-elev);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .sh-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .sh-card:hover::after { width: 100%; }
+    .sh-img-wrap {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      position: relative;
+    }
+    .sh-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+    }
+    .sh-card:hover .sh-img-wrap img { transform: scale(1.05); }
+    .sh-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 4px 10px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .sh-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .sh-price {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .sh-title {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.38;
+      font-weight: 600;
+    }
+    .sh-specs {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Interactive Ekspertiz & Mortgage Studio */
+    .studio-band {
+      margin: 48px 0 90px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 24px;
+    }
+    .studio-box {
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      padding: 26px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-stage, .studio-band { grid-template-columns: 1fr; }
+      .showroom-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-info { padding: 28px 22px; border-left: 0; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 16px; }
+      .showroom-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="t2-nav">
+    <div class="wrap t2-nav-inner">
+      <a class="t2-brand" href="../index.html">
+        <span class="t2-wordmark" data-bname>PORTFÖYTR</span>
+        <span class="t2-sub">Signature Residence &amp; Automotive</span>
+      </a>
+
+      <div class="t2-controls">
+        <div class="swatches" aria-label="Showroom renk paleti">
+          <button type="button" class="sw active" style="background:#DA291C;" data-p="rosso" title="Rosso Yarış Kırmızısı"></button>
+          <button type="button" class="sw" style="background:#1C69D4;" data-p="bavaria" title="Bavyera M Mavisi"></button>
+          <button type="button" class="sw" style="background:#C89D54;" data-p="champagne" title="Şampanya Altın"></button>
+          <button type="button" class="sw" style="background:#F6F5F1;" data-p="ivory" title="Fildişi Açık Showroom"></button>
+        </div>
+        <a class="t2-btn t2-btn-accent" href="../admin.html">Yönetim Konsolu</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-stage" id="heroStage"></section>
+
+  <main class="wrap">
+    <div class="showroom-bar">
+      <div class="tab-strip">
+        <button type="button" class="sh-tab active" data-sec="all">Tüm Koleksiyon</button>
+        <button type="button" class="sh-tab" data-sec="emlak">Mimari Konut &amp; Villa</button>
+        <button type="button" class="sh-tab" data-sec="oto">Premium Otomotiv</button>
+      </div>
+      <input type="search" id="t2Search" placeholder="Koleksiyonda filtrele (BMW, Villa, Suadiye...)" style="height:38px;padding:0 14px;background:var(--bg-elev);border:1px solid var(--line);min-width:260px;">
+    </div>
+
+    <section class="showroom-grid" id="t2Grid"></section>
+
+    <section class="studio-band">
+      <div class="studio-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+          <div>
+            <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent);">DİJİTAL EKSPERTİZ LABORATUVARI</span>
+            <h2 style="margin:4px 0 0;font-size:1.25rem;">Canlı Araç Kaporta &amp; Tramer İnceleme</h2>
+          </div>
+          <select id="studioCarSelect" style="height:36px;padding:0 10px;background:var(--bg);border:1px solid var(--line);"></select>
+        </div>
+        <div id="studioEkspertizMount"></div>
+      </div>
+
+      <div class="studio-box">
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--accent);">FİNANSMAN &amp; TAKAS SİMÜLATÖRÜ</span>
+        <h2 style="margin:4px 0 14px;font-size:1.25rem;">Konut &amp; Taşıt Kredisi Hesaplama</h2>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <label style="font-size:13px;">Kredi Tutarı (₺)
+            <input type="number" id="calcAmount" value="2000000" style="width:100%;height:40px;margin-top:4px;padding:0 12px;background:var(--bg);border:1px solid var(--line);">
+          </label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <label style="font-size:13px;">Vade (Ay)
+              <select id="calcMonths" style="width:100%;height:40px;margin-top:4px;padding:0 10px;background:var(--bg);border:1px solid var(--line);">
+                <option value="24">24 Ay (Taşıt)</option>
+                <option value="36" selected>36 Ay (Taşıt)</option>
+                <option value="60">60 Ay (Konut)</option>
+                <option value="120">120 Ay (Konut)</option>
+              </select>
+            </label>
+            <label style="font-size:13px;">Aylık Oran (%)
+              <input type="number" step="0.01" id="calcRate" value="3.19" style="width:100%;height:40px;margin-top:4px;padding:0 10px;background:var(--bg);border:1px solid var(--line);">
+            </label>
+          </div>
+          <div style="padding:16px;background:var(--bg);border:1px solid var(--line);margin-top:6px;">
+            <span style="font-size:12px;color:var(--muted);display:block;">Aylık Tahmini Taksit</span>
+            <strong class="num" id="calcResult" style="font-size:1.65rem;color:var(--accent);">94.820 ₺</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../assets/portfolio-engine.js"></script>
+  <script>
+    (function () {
+      const E = window.PortfoyEngine;
+      const cfg = E.getConfig();
+      document.querySelectorAll('[data-bname]').forEach(el => { el.textContent = cfg.siteName; });
+      E.mountThemeSwitcher('t2', '../');
+
+      document.querySelectorAll('[data-p]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.documentElement.setAttribute('data-palette', btn.getAttribute('data-p'));
+          document.querySelectorAll('[data-p]').forEach(b => b.classList.toggle('active', b === btn));
+        });
+      });
+
+      const all = E.getListings();
+      const flagships = all.filter(x => x.featured).slice(0, 4);
+      let heroIdx = 0;
+
+      function renderHero() {
+        const it = flagships[heroIdx] || all[0];
+        const isEm = it.sector === 'emlak';
+        const fb = E.makeFallbackSvg(it.title.slice(0, 26), '#111');
+        document.getElementById('heroStage').innerHTML = `
+          <div class="hero-visual">
+            <img src="${it.images[0]}" alt="${it.title}" onerror="this.onerror=null;this.src='${fb}';">
+          </div>
+          <div class="hero-info">
+            <div>
+              <span class="hero-kicker">VİTRİN KOLEKSİYONU // #${it.id} · ${it.city.toUpperCase()}</span>
+              <h1 class="hero-h1">${it.title}</h1>
+              <div class="hero-price num">${E.formatPrice(it.price, it.dealType)}</div>
+              <p style="color:var(--muted);line-height:1.6;margin:0;">${it.desc}</p>
+              <div class="telemetry-bar">
+                ${isEm ? `
+                  <div class="tel-cell"><span>ODA PLANI</span><strong>${it.rooms}</strong></div>
+                  <div class="tel-cell"><span>NET ALAN</span><strong class="num">${it.sqmNet} m²</strong></div>
+                  <div class="tel-cell"><span>TAPU &amp; ISITMA</span><strong>${it.heating}</strong></div>
+                ` : `
+                  <div class="tel-cell"><span>MODEL / GÜÇ</span><strong>${it.year} · ${it.hp || '170 HP'}</strong></div>
+                  <div class="tel-cell"><span>KİLOMETRE</span><strong class="num">${Number(it.km).toLocaleString('tr-TR')} km</strong></div>
+                  <div class="tel-cell"><span>EKSPERTİZ</span><strong>${it.damageSummary}</strong></div>
+                `}
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a class="t2-btn t2-btn-accent" target="_blank" rel="noopener" href="https://wa.me/${cfg.phone}?text=${encodeURIComponent(it.id + ' nolu ' + it.title + ' ilanı için VIP randevu talebi.')}">Özel Gösterim &amp; Teklif</a>
+                <a class="t2-btn" href="tel:+${cfg.phone}">${cfg.phoneDisplay}</a>
+              </div>
+            </div>
+            <div class="hero-thumbs">
+              ${flagships.map((f, i) => `<button type="button" class="hero-thumb-btn ${i === heroIdx ? 'is-current' : ''}" data-hidx="${i}">${f.sector === 'emlak' ? 'Konut' : 'Showroom'} · ${f.city}</button>`).join('')}
+            </div>
+          </div>`;
+
+        document.querySelectorAll('[data-hidx]').forEach(b => {
+          b.addEventListener('click', () => {
+            heroIdx = Number(b.getAttribute('data-hidx'));
+            renderHero();
+          });
+        });
+      }
+
+      let activeSec = 'all';
+      function renderShowroom() {
+        const q = document.getElementById('t2Search').value.trim().toLowerCase();
+        const filtered = E.getListings().filter(it => {
+          if (activeSec !== 'all' && it.sector !== activeSec) return false;
+          if (q && !(it.title + ' ' + it.city + ' ' + it.district).toLowerCase().includes(q)) return false;
+          return true;
+        });
+
+        document.getElementById('t2Grid').innerHTML = filtered.map(it => {
+          const isEm = it.sector === 'emlak';
+          const fb = E.makeFallbackSvg(it.title.slice(0, 24), '#1a1d24');
+          return `
+            <article class="sh-card">
+              <div class="sh-img-wrap">
+                <img src="${it.images[0]}" alt="${it.title}" loading="lazy" onerror="this.onerror=null;this.src='${fb}';">
+                <span class="sh-badge">#${it.id} · ${isEm ? it.dealType.toUpperCase() : 'EKSPERTİZLİ'}</span>
+              </div>
+              <div class="sh-body">
+                <div class="sh-price num">${E.formatPrice(it.price, it.dealType)}</div>
+                <h3 class="sh-title">${it.title}</h3>
+                <div style="font-size:13px;color:var(--muted);">${it.city} / ${it.district}</div>
+                <div class="sh-specs">
+                  <span>${isEm ? it.rooms + ' · ' + it.sqmNet + ' m²' : it.year + ' · ' + Number(it.km).toLocaleString('tr-TR') + ' km'}</span>
+                  <a style="color:var(--accent);font-weight:700;" target="_blank" rel="noopener" href="https://wa.me/${cfg.phone}?text=${encodeURIComponent(it.id + ' nolu ilan için görüşmek istiyorum.')}">WHATSAPP →</a>
+                </div>
+              </div>
+            </article>`;
+        }).join('');
+      }
+
+      document.querySelectorAll('[data-sec]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeSec = btn.getAttribute('data-sec');
+          document.querySelectorAll('[data-sec]').forEach(b => b.classList.toggle('active', b === btn));
+          renderShowroom();
+        });
+      });
+      document.getElementById('t2Search').addEventListener('input', renderShowroom);
+
+      // Ekspertiz Studio
+      const cars = all.filter(x => x.sector === 'oto');
+      const carSel = document.getElementById('studioCarSelect');
+      carSel.innerHTML = cars.map(c => `<option value="${c.id}">${c.title.slice(0, 38)}...</option>`).join('');
+      function updateEkspertizStudio() {
+        const car = cars.find(c => c.id === carSel.value) || cars[0];
+        if (!car) return;
+        document.getElementById('studioEkspertizMount').innerHTML = E.renderEkspertizSvg(car.ekspertiz, false);
+      }
+      carSel.addEventListener('change', updateEkspertizStudio);
+
+      // Kredi Hesaplama
+      function updateCalc() {
+        const p = Number(document.getElementById('calcAmount').value || 0);
+        const m = Number(document.getElementById('calcMonths').value || 36);
+        const r = Number(document.getElementById('calcRate').value || 3.19);
+        const res = E.calcMonthlyInstallment(p, r, m);
+        document.getElementById('calcResult').textContent = res.toLocaleString('tr-TR') + ' ₺ / Ay';
+      }
+      ['calcAmount', 'calcMonths', 'calcRate'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateCalc);
+        document.getElementById(id).addEventListener('change', updateCalc);
+      });
+
+      renderHero();
+      renderShowroom();
+      updateEkspertizStudio();
+      updateCalc();
+    })();
+  </script>
+  <script src="../assets/motion-polish.js"></script>
+</body>
+</html>
